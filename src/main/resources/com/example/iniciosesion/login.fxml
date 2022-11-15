@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
+
+<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="473.0" prefWidth="650.0" xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.iniciosesion.LoginController">
+   <children>
+      <Label layoutX="49.0" layoutY="35.0" prefHeight="34.0" prefWidth="232.0" text="Inicio de sesión">
+         <font>
+            <Font size="24.0" />
+         </font>
+      </Label>
+      <Label layoutX="49.0" layoutY="110.0" prefHeight="5.0" prefWidth="51.0" text="Email">
+         <font>
+            <Font size="18.0" />
+         </font>
+      </Label>
+      <TextField fx:id="emailField" layoutX="49.0" layoutY="137.0" prefHeight="35.0" prefWidth="499.0">
+         <font>
+            <Font size="18.0" />
+         </font></TextField>
+      <Label layoutX="49.0" layoutY="209.0" text="Password">
+         <font>
+            <Font size="18.0" />
+         </font>
+      </Label>
+      <PasswordField fx:id="passwordField" layoutX="50.0" layoutY="237.0" prefHeight="35.0" prefWidth="499.0">
+         <font>
+            <Font size="18.0" />
+         </font></PasswordField>
+      <Label layoutX="167.0" layoutY="300.0" text="Forgot the passwordd? Click here" onMouseClicked="#recuperarCuenta">
+         <font>
+            <Font size="18.0" />
+         </font>
+      </Label>
+      <Button layoutX="264.0" layoutY="372.0" mnemonicParsing="false" onAction="#iniciarSesion" text="Login">
+         <font>
+            <Font size="18.0" />
+         </font>
+      </Button>
+      <Label fx:id="result" layoutX="96.0" layoutY="337.0" prefHeight="27.0" prefWidth="404.0" />
+   </children>
+</Pane>

@@ -1,0 +1,115 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<TabPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" tabClosingPolicy="UNAVAILABLE" xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.iniciosesion.EmpleadoController">
+    <tabs>
+        <Tab text="Registrar propiedad">
+            <content>
+                <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="3.0" prefWidth="600.0">
+                    <children>
+                        <Separator layoutX="300.0" orientation="VERTICAL" prefHeight="372.0" prefWidth="0.0" />
+                        <Label layoutX="42.0" layoutY="14.0" text="Por favor ingresa los datos de la propiedad." />
+                        <Label layoutX="45.0" layoutY="43.0" text="Dirección" />
+                        <TextField fx:id="direccion" layoutX="43.0" layoutY="60.0" onKeyTyped="#eventKey" prefHeight="25.0" prefWidth="193.0" />
+                        <Label layoutX="44.0" layoutY="94.0" text="Valor" />
+                        <TextField fx:id="valor" layoutX="43.0" layoutY="111.0" onKeyTyped="#eventKey" prefHeight="25.0" prefWidth="193.0" />
+                        <Label layoutX="46.0" layoutY="147.0" prefHeight="25.0" prefWidth="25.0" text="Area" />
+                        <TextField fx:id="area" layoutX="42.0" layoutY="173.0" onKeyTyped="#eventKey" prefHeight="25.0" prefWidth="193.0" />
+                        <Label layoutX="43.0" layoutY="211.0" text="Propietario" />
+                        <TextField fx:id="propietario" layoutX="42.0" layoutY="228.0" onKeyTyped="#eventKey" prefHeight="25.0" prefWidth="193.0" />
+                        <Label layoutX="45.0" layoutY="272.0" text="Disponibilidad" />
+                        <TextField fx:id="disponibilidad" layoutX="42.0" layoutY="289.0" onKeyTyped="#eventKey" prefHeight="25.0" prefWidth="193.0" />
+                        <Button fx:id="registrar" layoutX="113.0" layoutY="325.0" mnemonicParsing="false" onAction="#registrar" text="Registrar" />
+                  <Label fx:id="resultado" layoutX="344.0" layoutY="31.0" prefHeight="61.0" prefWidth="90.0" />
+                    </children></AnchorPane>
+            </content>
+        </Tab>
+        <Tab text="Registrar propietario">
+            <content>
+                <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+                    <children>
+                        <Separator layoutX="297.0" layoutY="-1.0" orientation="VERTICAL" prefHeight="376.0" prefWidth="3.0" />
+                        <Label layoutX="42.0" layoutY="24.0" text="Por favor ingresa los datos del propietario" />
+                        <Label layoutX="49.0" layoutY="63.0" text=" Nombre y apellidos" />
+                        <TextField fx:id="nombre" layoutX="49.0" layoutY="89.0" onKeyTyped="#eventKey" />
+                        <Label layoutX="49.0" layoutY="131.0" text="Identificación" />
+                        <TextField fx:id="id" layoutX="49.0" layoutY="162.0" onKeyTyped="#eventKey" />
+                        <Button fx:id="registrarp" layoutX="85.0" layoutY="288.0" mnemonicParsing="false" onAction="#eventAction" text="Registrar propietario" />
+                    </children></AnchorPane>
+            </content>
+        </Tab>
+        <Tab text="Registrar cliente">
+            <content>
+                <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+                    <children>
+                        <Separator layoutX="294.0" orientation="VERTICAL" prefHeight="371.0" prefWidth="10.0" />
+                        <Label layoutX="62.0" layoutY="23.0" text="Por favor ingresa los datos del cliente." />
+                        <Label layoutX="46.0" layoutY="56.0" text="Nombre y apellidos" />
+                        <TextField fx:id="nombrec" layoutX="46.0" layoutY="90.0" onKeyTyped="#eventKey" />
+                        <Label layoutX="46.0" layoutY="134.0" text="Identificación" />
+                        <TextField fx:id="idc" layoutX="43.0" layoutY="161.0" onKeyTyped="#eventKey" />
+                        <Label layoutX="46.0" layoutY="199.0" text="Password" />
+                        <PasswordField fx:id="password" layoutX="46.0" layoutY="228.0" onKeyTyped="#eventKey" />
+                        <Button fx:id="registrarc" layoutX="82.0" layoutY="297.0" mnemonicParsing="false" onAction="#eventAction" text="Registrar cliente" />
+                    </children>
+                </AnchorPane>
+            </content>
+        </Tab>
+        <Tab text="Alquilar">
+            <content>
+                <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+                    <children>
+                        <Separator layoutX="294.0" orientation="VERTICAL" prefHeight="370.0" prefWidth="3.0" />
+                        <Label layoutX="77.0" layoutY="35.0" text="Ingresar los siguientes datos:" />
+                        <Label layoutX="55.0" layoutY="71.0" text="Nombre y apellidos del cliente." />
+                        <TextField fx:id="nya" layoutX="52.0" layoutY="98.0" onKeyTyped="#eventKey" />
+                        <Label layoutX="52.0" layoutY="135.0" text="Id del cliente." />
+                        <TextField fx:id="identificacion" layoutX="54.0" layoutY="152.0" onKeyTyped="#eventKey" />
+                        <Label layoutX="52.0" layoutY="185.0" text="Nombres y apellidos del propietario" />
+                        <TextField fx:id="nombreya" layoutX="54.0" layoutY="202.0" onKeyTyped="#eventKey" />
+                        <Button fx:id="generar" layoutX="59.0" layoutY="332.0" mnemonicParsing="false" onAction="#eventAction" text="Generar información del alquiler." />
+                        <Label layoutX="53.0" layoutY="233.0" text="Id del propietario." />
+                        <TextField fx:id="idprop" layoutX="52.0" layoutY="250.0" onKeyTyped="#eventKey" />
+                        <Label layoutX="55.0" layoutY="282.0" text="Dirección propiedad" />
+                        <TextField fx:id="dirprop" layoutX="54.0" layoutY="299.0" onKeyTyped="#eventKey" />
+                    </children>
+                </AnchorPane>
+            </content>
+        </Tab>
+        <Tab text="Vender">
+            <content>
+                <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+                    <children>
+                        <Separator layoutX="297.0" orientation="VERTICAL" prefHeight="371.0" prefWidth="7.0" />
+                        <Label layoutX="48.0" layoutY="28.0" text="Por favor ingresa los siguientes datos." />
+                        <Label layoutX="48.0" layoutY="60.0" text="Nombre y apellidos del cliente." />
+                        <TextField fx:id="name" layoutX="48.0" layoutY="77.0" onKeyTyped="#eventKey" />
+                        <Label layoutX="52.0" layoutY="102.0" text="Id del cliente." />
+                        <TextField fx:id="iddelc" layoutX="48.0" layoutY="119.0" onKeyTyped="#eventKey" />
+                        <Label layoutX="52.0" layoutY="209.0" text="Id del propietario" />
+                        <Label layoutX="50.0" layoutY="152.0" text="Nombre y apellidos del propietario." />
+                        <TextField fx:id="nameprop" layoutX="48.0" layoutY="173.0" onKeyTyped="#eventKey" />
+                        <Label layoutX="54.0" layoutY="257.0" text="Dirección propiedad" />
+                        <TextField fx:id="iddelpropi" layoutX="49.0" layoutY="226.0" onKeyTyped="#eventKey" />
+                        <TextField fx:id="dirpropiedad" layoutX="48.0" layoutY="274.0" onKeyTyped="#eventKey" />
+                        <Button fx:id="generate" layoutX="61.0" layoutY="314.0" mnemonicParsing="false" onAction="#eventAction" text="Generar información de la venta" />
+                    </children>
+                </AnchorPane>
+            </content>
+        </Tab>
+        <Tab text="Retirar propiedad">
+            <content>
+                <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+                    <children>
+                        <Separator layoutX="294.0" orientation="VERTICAL" prefHeight="370.0" prefWidth="3.0" />
+                        <Label layoutX="38.0" layoutY="45.0" text="Ingrese la dirección de la propiedad a retirar" />
+                        <TextField fx:id="dirprore" layoutX="31.0" layoutY="100.0" onKeyTyped="#eventKey" prefHeight="25.0" prefWidth="242.0" />
+                        <Button fx:id="retiprop" layoutX="98.0" layoutY="256.0" mnemonicParsing="false" onAction="#eventAction" text="Retirar propiedad" />
+                    </children>
+                </AnchorPane>
+            </content>
+        </Tab>
+    </tabs>
+</TabPane>
