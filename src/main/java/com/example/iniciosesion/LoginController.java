@@ -2,14 +2,21 @@ package com.example.iniciosesion;
 //import model.FincaRaiz;
 
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.control.Label;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
 import javafx.scene.input.MouseEvent;
-import model.FincaRaiz;
+import static com.example.iniciosesion.AppController.INSTANCE;
 
+import javafx.stage.Stage;
 import model.Administrador;
+import model.Empleado;
+import model.Usuario;
 
+import java.io.IOException;
 import java.util.Properties;
 import javax.mail.Message;
 import javax.mail.MessagingException;
@@ -28,33 +35,32 @@ public class LoginController {
     @FXML
     private PasswordField passwordField;
 
-    FincaRaiz modelo = new FincaRaiz();
-
-
     @FXML
-    protected void iniciarSesion() {
+    protected void iniciarSesion() throws IOException {
 
-        List<Administrador> administradores = modelo.getAdministradores();
         String email = emailField.getText();
         String password = passwordField.getText();
 
-        if(email.equals("") || password.equals("")){
-            result.setText("*Ingrese sus datos.");
+        Usuario userLogin = INSTANCE.getModel().autenticar(email, password);
+
+        if(userLogin == null){
+            emailField.setText("");
+            passwordField.setText("");
+            result.setText("CREDENCIALES INCORRECTAS");
+        }else if(userLogin instanceof Empleado){
+            Parent parent = FXMLLoader.load(MainApp.class.getResource("empleado-view.fxml"));
+            Scene scene = new Scene(parent, 320, 240);
+            Stage stage = new Stage();
+            stage.setTitle("Principal");
+            stage.setScene(scene);
+            stage.show();
         }else{
-
-            Administrador emailEncontrado = administradores.stream().filter( (admin)-> admin.getEmail().equals(email)).findFirst().orElse(null);
-            if(emailEncontrado == null){
-                result.setText("Usuario no registrado");
-            }else{
-                if(emailEncontrado.getPassword().equals(password)){
-                    result.setText("Inicio de sesion exitoso");
-                    emailField.setText("");
-                    passwordField.setText("");
-                }else{
-                    result.setText("Contraseña invalida");
-                }
-            }
-
+            Parent parent = FXMLLoader.load(MainApp.class.getResource("administrador-view.fxml"));
+            Scene scene = new Scene(parent, 320, 240);
+            Stage stage = new Stage();
+            stage.setTitle("Principal");
+            stage.setScene(scene);
+            stage.show();
         }
 
     }

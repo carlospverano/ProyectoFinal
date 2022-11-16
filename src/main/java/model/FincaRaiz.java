@@ -284,6 +284,13 @@ public class FincaRaiz {
         }
     }
 
+    public Usuario autenticar (String email, String password){
+       return administradores.stream()
+                .filter( (user)-> user.getEmail().equals(email) && user.getPassword().equals(password))
+                .findFirst()
+                .orElse(null);
+    }
+
 
     public void menuEmpleado() {
         System.out.println("1.Registrar propiedad.");
