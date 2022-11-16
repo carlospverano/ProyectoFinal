@@ -5,6 +5,7 @@ import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
@@ -34,9 +35,11 @@ public class LoginController {
     private TextField emailField;
     @FXML
     private PasswordField passwordField;
+    @FXML
+    private Button btnLogin;
 
     @FXML
-    protected void iniciarSesion() throws IOException {
+    protected void onLoginButtonClick() throws IOException {
 
         String email = emailField.getText();
         String password = passwordField.getText();
@@ -58,8 +61,10 @@ public class LoginController {
             Parent parent = FXMLLoader.load(MainApp.class.getResource("administrador-view.fxml"));
             Scene scene = new Scene(parent, 320, 240);
             Stage stage = new Stage();
-            stage.setTitle("Principal");
+            stage.setTitle("ADMINISTRADOR");
             stage.setScene(scene);
+            stage.initOwner(btnLogin.getScene().getWindow());
+            btnLogin.getScene().getWindow().hide();
             stage.show();
         }
 
