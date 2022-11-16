@@ -55,6 +55,18 @@ public class Propiedad {
     public void setDisponibilidad(Disponibilidad disponibilidad) {
         this.disponibilidad = disponibilidad;
 
+
+
     }
 
+    @Override
+    public String toString() {
+        return "Propiedad{" +
+                "direcion='" + direcion + '\'' +
+                ", valor=" + valor +
+                ", area=" + area +
+                ", propietario=" + propietario +
+                ", disponibilidad=" + disponibilidad +
+                '}';
+    }
 }
