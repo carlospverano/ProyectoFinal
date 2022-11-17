@@ -47,7 +47,19 @@ public class FincaRaiz {
 
         Administrador admin = new Administrador("admin", "001", "admin@fincaraiz.com", "admin");
         administradores.add(admin);
+
+        propietarios.add(new Propietario("Alejandra","2345"));
+        propietarios.add(new Propietario("Carlos","34567"));
+        propietarios.add(new Propietario("Brahian","87654"));
+        propietarios.add(new Propietario("Jojan","765432"));
+        propietarios.add(new Propietario("Harold","98776"));
+        propietarios.add(new Propietario("Camilo","87654"));
+        propietarios.add(new Propietario("Sebastian","8765"));
+        propietarios.add(new Propietario("Alejandro","23456"));
+        propietarios.add(new Propietario("Nathan","09876"));
+        propietarios.add(new Propietario("Noah","987654"));
     }
+
 
     public List<Propiedad> getPropiedades() {
         return propiedades;
@@ -80,23 +92,12 @@ public class FincaRaiz {
     public void setAdministradores(List<Administrador> administradores) {
         this.administradores = administradores;
     }
-    public void registrarPropiedad(Propiedad propiedad, Usuario usuario) throws Exception {
+    public void registrarPropiedad(Propiedad propiedad) throws Exception {
 
-        if (usuario instanceof Empleado) {
-            String dirrecion1 = propiedad.getDirecion();
-            Propiedad propiedaAux = propiedades.stream().filter(propiedades -> propiedades.getDirecion() == dirrecion1).findFirst().orElse(null);
-            if (propiedaAux != null) {
-                throw new Exception("La propiedad ya existe");
-            } else if (propiedad != null) {
+       if (propiedad !=null){
+           propiedades.add(propiedad);
+       }
 
-                propiedades.add(propiedad);
-            } else {
-                throw new Exception("Datos invalidos");
-            }
-        }
-        else {
-            throw new Exception("Solo los empleados pueden registrar propiedades");
-        }
     }
     public void registrarPropietario(Propietario propietario, Empleado empleado) throws Exception{
 

@@ -8,6 +8,7 @@
 <?import javafx.scene.control.Separator?>
 <?import javafx.scene.control.Tab?>
 <?import javafx.scene.control.TabPane?>
+<?import javafx.scene.control.TextArea?>
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.layout.AnchorPane?>
 
@@ -31,7 +32,7 @@
                     <content>
                       <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="473.0" prefWidth="243.0">
                            <children>
-                              <Label fx:id="resultado3" prefHeight="468.0" prefWidth="434.0" wrapText="true" />
+                              <Label fx:id="resultado3" layoutX="-1.0" prefHeight="468.0" prefWidth="434.0" wrapText="true" />
                            </children>
                         </AnchorPane>
                     </content>
@@ -40,7 +41,7 @@
                   <TextField fx:id="busqueda" layoutX="37.0" layoutY="287.0" onKeyTyped="#eventKey" prefHeight="25.0" prefWidth="170.0" />
                   <Button fx:id="buscar" layoutX="225.0" layoutY="287.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="62.0" text=" Buscar" />
                   <Label layoutX="101.0" layoutY="333.0" text="Información" />
-                  <TextField fx:id="informacion" layoutX="32.0" layoutY="360.0" onKeyTyped="#eventKey" prefHeight="100.0" prefWidth="214.0" />
+                  <TextArea fx:id="informacion" layoutX="37.0" layoutY="362.0" prefHeight="96.0" prefWidth="217.0" />
                     </children></AnchorPane>
             </content>
         </Tab>

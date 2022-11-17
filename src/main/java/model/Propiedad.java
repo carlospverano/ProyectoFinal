@@ -65,7 +65,7 @@ public class Propiedad {
                 "direcion='" + direcion + '\'' +
                 ", valor=" + valor +
                 ", area=" + area +
-                ", propietario=" + propietario +
+                ", propietario=" + propietario.getNombre() +
                 ", disponibilidad=" + disponibilidad +
                 '}';
     }

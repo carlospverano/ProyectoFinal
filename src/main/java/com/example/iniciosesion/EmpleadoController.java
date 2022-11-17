@@ -3,9 +3,7 @@ package com.example.iniciosesion;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
-import javafx.scene.control.ComboBox;
-import javafx.scene.control.Label;
-import javafx.scene.control.TextField;
+import javafx.scene.control.*;
 import javafx.scene.input.KeyEvent;
 import model.*;
 
@@ -14,6 +12,12 @@ import java.util.ResourceBundle;
 
 
 public class EmpleadoController implements Initializable {
+
+    @FXML
+    private TextField nombre;
+
+    @FXML
+    private TextField id;
 
     FincaRaiz finca = new FincaRaiz();
 
@@ -30,8 +34,24 @@ public class EmpleadoController implements Initializable {
     @FXML
     private ComboBox <Propietario> combopropietario;
 
+    @FXML
+    private TextField busqueda;
 
+    @FXML
+    private Button buscar;
 
+    private TextArea informacion;
+
+    @FXML
+    private TableView<Propiedad> tablaPropiedades;
+
+    @FXML
+    private TableColumn<Propiedad, String> columnDireccion;
+    @FXML
+    private TableColumn<Propiedad, Double> columnaValor;
+
+    @FXML
+    private void comboboxEvents(ActionEvent e){}
 
     public void eventKey(KeyEvent keyEvent) {
     }
@@ -45,14 +65,14 @@ public class EmpleadoController implements Initializable {
 
         String areaPropiedad = area.getText();
 
-        //String propietarioP= propietario.get;
-        resultado3.setText(propietarioP);
+        Propietario propietarioP= combopropietario.getValue();
+        resultado3.setText(propietarioP.getNombre());
 
-        Propiedad propiedad= new Propiedad(direccionRegistrada,Double.parseDouble(valorPropiedad),Double.parseDouble(areaPropiedad),new Propietario(propietarioP,"1456"),Disponibilidad.DISPONIBLE);
+        Propiedad propiedad= new Propiedad(direccionRegistrada,Double.parseDouble(valorPropiedad),Double.parseDouble(areaPropiedad),propietarioP,Disponibilidad.DISPONIBLE);
 
         resultado3.setText(propiedad.toString());
         try {
-            finca.registrarPropiedad(propiedad, new Empleado("Aleja", "124567", "aleja@mail.com", "tgvijk2mqo5",true));
+            finca.registrarPropiedad(propiedad);
             final String[] lista = {""};
             finca.getPropiedades().forEach(propiedad1 -> lista[0] = lista[0] +propiedad1.toString()+"\n");
             resultado3.setText(lista[0]);
@@ -63,11 +83,6 @@ public class EmpleadoController implements Initializable {
         }
     }
 
-    @FXML
-    private TextField nombre;
-
-    @FXML
-    private TextField id;
     public void registrarPropietario () throws Exception {
 
 
@@ -83,9 +98,6 @@ public class EmpleadoController implements Initializable {
             e.getMessage();
         }
 
-
-
-
     }
 
     @Override
@@ -94,4 +106,5 @@ public class EmpleadoController implements Initializable {
         combopropietario.getItems().addAll(finca.getPropietarios());
 
     }
+
 }
