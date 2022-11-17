@@ -14,6 +14,23 @@ public class FincaRaiz {
     private List <Cliente> clientes;
     private List <Empleado> empleados;
     private List <Administrador> administradores;
+
+    public List<Propietario> getPropietarios() {
+        return propietarios;
+    }
+
+    public void setPropietarios(List<Propietario> propietarios) {
+        this.propietarios = propietarios;
+    }
+
+    public List<Transaccion> getTransacciones() {
+        return transacciones;
+    }
+
+    public void setTransacciones(List<Transaccion> transacciones) {
+        this.transacciones = transacciones;
+    }
+
     private  List <Propietario> propietarios;
     private List<Transaccion> transacciones;
 
