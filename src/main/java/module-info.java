@@ -1,6 +1,7 @@
 module com.example.iniciosesion {
     requires javafx.controls;
     requires javafx.fxml;
+    requires mail;
 
     // requires org.controlsfx.controls;
     // requires java.mail;

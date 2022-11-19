@@ -8,6 +8,7 @@ import javafx.fxml.Initializable;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.input.KeyEvent;
+import static com.example.iniciosesion.AppController.INSTANCE;
 import model.*;
 
 
@@ -26,7 +27,7 @@ public class EmpleadoController implements Initializable {
     @FXML
     private TextField id;
 
-    FincaRaiz finca = new FincaRaiz();
+    FincaRaiz finca = INSTANCE.getModel();
 
    Empleado empleado1 = new Empleado("Aleja", "124567", "aleja@mail.com", "tgvijk2mqo5",true);
 

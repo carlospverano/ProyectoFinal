@@ -44,6 +44,8 @@ public class FincaRaiz {
         transacciones = new ArrayList<>();
 
         Administrador admin = new Administrador("admin", "001", "admin@fincaraiz.com", "admin");
+        Empleado empleadox= new Empleado("Alejandra","aleja@mail.com","1245","8etbs",true);
+        empleados.add(empleadox);
         administradores.add(admin);
 
         propietarios.add(new Propietario("Alejandra","2345"));
@@ -120,7 +122,7 @@ public class FincaRaiz {
     public void registrarCliente (Cliente cliente,Empleado empleado)throws Exception{
 
         if (empleado.isEstado() == true) {
-            String dirrecion1 = empleado.getUserId();
+            String dirrecion1 = empleado.getId();
             Empleado propietarioAux = empleados.stream().filter(empleado1 -> empleado1.getNombre() == dirrecion1).findFirst().orElse(null);
             if (propietarioAux != null) {
                 throw new Exception("La propiedad ya existe");
@@ -221,8 +223,8 @@ public class FincaRaiz {
 
 
         if (administrador instanceof Administrador) {
-            String userId1 = empleado.getUserId();
-            Empleado empleadoAux = empleados.stream().filter(empleado1 -> empleado1.getUserId() == userId1).findFirst().orElse(null);
+            String userId1 = empleado.getId();
+            Empleado empleadoAux = empleados.stream().filter(empleado1 -> empleado1.getId() == userId1).findFirst().orElse(null);
             if (empleadoAux != null) {
                 throw new Exception("La propiedad ya existe");
             } else if (empleado != null) {
@@ -241,7 +243,7 @@ public class FincaRaiz {
 
         ArrayList<Transaccion> listaTransaccionRango =  (ArrayList<Transaccion>) transacciones.stream().filter(transaccion -> (
 
-                transaccion.getEmpleado().getUserId().equals(idEmpleado) &&
+                transaccion.getEmpleado().getId().equals(idEmpleado) &&
                         (transaccion.getFechaRegistro().isAfter(fechaInicio) || transaccion.getFechaRegistro().equals(fechaInicio))
                         &&
                         (transaccion.getFechaRegistro().isBefore(fechaFinal) || transaccion.getFechaRegistro().equals(fechaFinal))
@@ -272,7 +274,7 @@ public class FincaRaiz {
 
         if (usuario instanceof Administrador) {
             Empleado empleadoAux = empleado;
-            empleado = empleados.stream().filter(empleados -> empleados.getUserId() == empleadoAux.getUserId()).findFirst().orElse(null);
+            empleado = empleados.stream().filter(empleados -> empleados.getId() == empleadoAux.getId()).findFirst().orElse(null);
             if (empleado != null) {
                 empleado.setEstado(false);
             }else {
@@ -288,16 +290,38 @@ public class FincaRaiz {
 
         if (usuario instanceof Administrador) {
             Empleado empleadoAux = empleado;
-            empleado = empleados.stream().filter(empleados -> empleados.getUserId() == empleadoAux.getUserId()).findFirst().orElse(null);
+            empleado = empleados.stream().filter(empleados -> empleados.getId() == empleadoAux.getId()).findFirst().orElse(null);
             if (empleado != null) {
                 empleado.setNombre(nombre);
-                empleado.setUserId(userId);
+                empleado.setId(userId);
                 empleado.setPassword(password);
                 empleado.setEstado(estado);
             }
         } else {
             throw new Exception("Solo los administradores pueden actualizar empleados");
         }
+    }
+
+    public Usuario autenticar (String email, String password){
+       Administrador administrador= administradores.stream()
+                .filter( (user)-> user.getEmail().equals(email) && user.getPassword().equals(password))
+                .findFirst()
+                .orElse(null);
+
+        Empleado empleado= empleados.stream()
+                .filter( (user)-> user.getEmail().equals(email) && user.getPassword().equals(password))
+                .findFirst()
+                .orElse(null);
+
+        if (administrador!=null){
+            return administrador;
+        } else if (empleado!=null) {
+            return empleado;
+        }
+        else {
+            return null;
+        }
+
     }
 
 
