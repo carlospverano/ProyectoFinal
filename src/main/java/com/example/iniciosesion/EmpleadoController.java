@@ -30,8 +30,7 @@ public class EmpleadoController implements Initializable {
 
    Empleado empleado1 = new Empleado("Aleja", "124567", "aleja@mail.com", "tgvijk2mqo5",true);
 
-    @FXML
-    private Label resultado3;
+
     @FXML
     private TextField direccion;
     @FXML
@@ -78,19 +77,14 @@ public class EmpleadoController implements Initializable {
         String areaPropiedad = area.getText();
 
         Propietario propietarioP= combopropietario.getValue();
-        resultado3.setText(propietarioP.getNombre());
 
         Propiedad propiedad= new Propiedad(direccionRegistrada,Double.parseDouble(valorPropiedad),Double.parseDouble(areaPropiedad),propietarioP,Disponibilidad.DISPONIBLE);
         propiedades.add(propiedad);
         tablaPropiedades.setItems(propiedades);
         tablaPropiedades.refresh(); //Actualiza la tabla
 
-        resultado3.setText(propiedad.toString());
         try {
             finca.registrarPropiedad(propiedad);
-            final String[] lista = {""};
-            finca.getPropiedades().forEach(propiedad1 -> lista[0] = lista[0] +propiedad1.toString()+"\n");
-            resultado3.setText(lista[0]);
 
         }
         catch (Exception e){
