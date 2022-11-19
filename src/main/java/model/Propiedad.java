@@ -2,26 +2,26 @@ package model;
 
 public class Propiedad {
 
-    private String direcion;
+    private String direccion;
     private double valor;
     private double area;
     private Propietario propietario;
-    protected Disponibilidad disponibilidad;
+    private Disponibilidad disponibilidad;
 
-    public Propiedad(String direcion, double valor, double area, Propietario propietario, Disponibilidad disponibilidad) {
-        this.direcion = direcion;
+    public Propiedad(String direccion, double valor, double area, Propietario propietario, Disponibilidad disponibilidad) {
+        this.direccion = direccion;
         this.valor = valor;
         this.area = area;
         this.propietario = propietario;
         this.disponibilidad = disponibilidad;
     }
 
-    public String getDirecion() {
-        return direcion;
+    public String getDireccion() {
+        return direccion;
     }
 
-    public void setDirrecion(String direcion) {
-        this.direcion = direcion;
+    public void setDireccion(String direccion) {
+        this.direccion = direccion;
     }
 
     public double getValor() {
@@ -36,7 +36,7 @@ public class Propiedad {
         return area;
     }
 
-    public void setArea(float area) {
+    public void setArea(double area) {
         this.area = area;
     }
 
@@ -49,23 +49,20 @@ public class Propiedad {
     }
 
     public Disponibilidad getDisponibilidad() {
-        return this.disponibilidad;
+        return disponibilidad;
     }
 
     public void setDisponibilidad(Disponibilidad disponibilidad) {
         this.disponibilidad = disponibilidad;
-
-
-
     }
 
     @Override
     public String toString() {
         return "Propiedad{" +
-                "direcion='" + direcion + '\'' +
+                "direccion='" + direccion + '\'' +
                 ", valor=" + valor +
                 ", area=" + area +
-                ", propietario=" + propietario.getNombre() +
+                ", propietario=" + propietario +
                 ", disponibilidad=" + disponibilidad +
                 '}';
     }

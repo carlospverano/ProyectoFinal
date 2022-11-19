@@ -1,9 +1,7 @@
 package model;
 
-import java.text.DateFormat;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
-import java.util.Iterator;
 import java.util.List;
 import java.util.Scanner;
 import java.util.stream.Collectors;
@@ -143,7 +141,7 @@ public class FincaRaiz {
         List<Propiedad> listaResultado = propiedades.stream().filter(propiedad1 -> propiedad.equals(propiedad1)).collect(Collectors.toList());
         for (Propiedad propiedad3 : listaResultado) {
 
-            if (propiedad3.getDirecion().equals(propiedad.getDirecion())) {
+            if (propiedad3.getDireccion().equals(propiedad.getDireccion())) {
 
                 if(disponibilidad.equalsIgnoreCase("disponible") ) {
                     System.out.println("Alquilada");
@@ -169,7 +167,7 @@ public class FincaRaiz {
 
         for (Propiedad propiedad3 : listaResultado) {
 
-            if (propiedad3.getDirecion().equals(propiedad.getDirecion())) {
+            if (propiedad3.getDireccion().equals(propiedad.getDireccion())) {
 
                 if(disponibilidad.equalsIgnoreCase("disponible") ) {
                     System.out.println("Vendida");

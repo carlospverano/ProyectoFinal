@@ -1,18 +1,25 @@
 package com.example.iniciosesion;
 
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.*;
+import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.input.KeyEvent;
 import model.*;
 
+
 import java.net.URL;
+import java.util.List;
 import java.util.ResourceBundle;
 
 
 public class EmpleadoController implements Initializable {
+    Propiedad propiedadSeleccionado;
 
+    private ObservableList<Propiedad> propiedades = FXCollections.observableArrayList();
     @FXML
     private TextField nombre;
 
@@ -35,20 +42,24 @@ public class EmpleadoController implements Initializable {
     private ComboBox <Propietario> combopropietario;
 
     @FXML
-    private TextField busqueda;
-
-    @FXML
-    private Button buscar;
-
-    private TextArea informacion;
-
-    @FXML
     private TableView<Propiedad> tablaPropiedades;
 
     @FXML
-    private TableColumn<Propiedad, String> columnDireccion;
+    private TableColumn<Propiedad,  Double> columnaArea;
+
+    @FXML
+    private TableColumn<Propiedad, String> columnaDireccion;
+
+    @FXML
+    private TableColumn<Disponibilidad, Enum> columnaDisponibilidad;
+
+    @FXML
+    private TableColumn<Propiedad, Propietario> columnaPropietario;
+
     @FXML
     private TableColumn<Propiedad, Double> columnaValor;
+
+
 
     @FXML
     private void comboboxEvents(ActionEvent e){}
@@ -58,6 +69,7 @@ public class EmpleadoController implements Initializable {
     public void eventAction(ActionEvent actionEvent) {
     }
     public void registrar() {
+
 
         String direccionRegistrada = direccion.getText();
 
@@ -69,6 +81,9 @@ public class EmpleadoController implements Initializable {
         resultado3.setText(propietarioP.getNombre());
 
         Propiedad propiedad= new Propiedad(direccionRegistrada,Double.parseDouble(valorPropiedad),Double.parseDouble(areaPropiedad),propietarioP,Disponibilidad.DISPONIBLE);
+        propiedades.add(propiedad);
+        tablaPropiedades.setItems(propiedades);
+        tablaPropiedades.refresh(); //Actualiza la tabla
 
         resultado3.setText(propiedad.toString());
         try {
@@ -104,7 +119,16 @@ public class EmpleadoController implements Initializable {
     public void initialize(URL url, ResourceBundle resourceBundle) {
 
         combopropietario.getItems().addAll(finca.getPropietarios());
+        this.columnaValor.setCellValueFactory(new PropertyValueFactory<>("valor"));
+        this.columnaDireccion.setCellValueFactory(new PropertyValueFactory<>("direccion"));
+        this.columnaArea.setCellValueFactory(new PropertyValueFactory<>("area"));
+        this.columnaPropietario.setCellValueFactory(new PropertyValueFactory<>("propietario"));
+        this.columnaDisponibilidad.setCellValueFactory(new PropertyValueFactory<>("disponibilidad"));
 
+        }
+
+    private void llenarTabla(List<Propiedad> propiedadList) {
+        tablaPropiedades.setItems(FXCollections.observableArrayList(propiedadList));
+        tablaPropiedades.refresh();
     }
-
-}
+    }
