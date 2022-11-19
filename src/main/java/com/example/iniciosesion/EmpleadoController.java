@@ -20,7 +20,9 @@ import java.util.ResourceBundle;
 public class EmpleadoController implements Initializable {
     Propiedad propiedadSeleccionado;
 
-    private ObservableList<Propiedad> propiedades = FXCollections.observableArrayList();
+    private ObservableList<Propiedad> propiedades = FXCollections.observableArrayList(); //Lista para mostrar en la tabla
+    private ObservableList<Propietario> propietarios = FXCollections.observableArrayList();
+    private ObservableList<Cliente> clientes = FXCollections.observableArrayList();
     @FXML
     private TextField nombre;
 
@@ -29,9 +31,10 @@ public class EmpleadoController implements Initializable {
 
     FincaRaiz finca = INSTANCE.getModel();
 
-   Empleado empleado1 = new Empleado("Aleja", "124567", "aleja@mail.com", "tgvijk2mqo5",true);
-
-
+    @FXML
+    private TextField nombreCliente;
+    @FXML
+    private TextField idCliente;
     @FXML
     private TextField direccion;
     @FXML
@@ -59,6 +62,25 @@ public class EmpleadoController implements Initializable {
     @FXML
     private TableColumn<Propiedad, Double> columnaValor;
 
+    @FXML
+    private TableView<Propietario> tablaPropietarios;
+
+
+    @FXML
+    private TableColumn<Propietario, String> columnaName;
+
+    @FXML
+    private TableColumn<Propietario, String> columnaIdPropietario;
+
+    @FXML
+    private TableView<Cliente> tablaClientes;
+
+    @FXML
+    private TableColumn<Cliente,  String> columnaNameCliente;
+
+    @FXML
+    private TableColumn<Cliente, String> columnaIdentificacionCliente;
+
 
 
     @FXML
@@ -69,7 +91,6 @@ public class EmpleadoController implements Initializable {
     public void eventAction(ActionEvent actionEvent) {
     }
     public void registrar() {
-
 
         String direccionRegistrada = direccion.getText();
 
@@ -86,7 +107,6 @@ public class EmpleadoController implements Initializable {
 
         try {
             finca.registrarPropiedad(propiedad);
-
         }
         catch (Exception e){
             e.getMessage();
@@ -95,14 +115,33 @@ public class EmpleadoController implements Initializable {
 
     public void registrarPropietario () throws Exception {
 
-
-
         String nombrePropietario = nombre.getText();
         String identificacionPropietario= id.getText();
 
         Propietario propietario1 = new Propietario(nombrePropietario,identificacionPropietario);
+        propietarios.add(propietario1);
+        tablaPropietarios.setItems(propietarios);
+        tablaPropietarios.refresh(); //Actualiza la tabla
         try {
-            finca.registrarPropietario(propietario1, empleado1);
+            finca.registrarPropietario(propietario1, finca.getEmpleados().get(0));
+        }
+        catch (Exception e){
+            e.getMessage();
+        }
+
+    }
+
+    public void registrarCliente () throws Exception {
+
+        String nombreCliente1 = nombreCliente.getText();
+        String identificacionCliente= idCliente.getText();
+
+        Cliente cliente = new Cliente(nombreCliente1,identificacionCliente);
+        clientes.add(cliente);
+        tablaClientes.setItems(clientes);
+        tablaClientes.refresh(); //Actualiza la tabla
+        try {
+            finca.registrarCliente(cliente, finca.getEmpleados().get(0));
         }
         catch (Exception e){
             e.getMessage();
@@ -119,6 +158,10 @@ public class EmpleadoController implements Initializable {
         this.columnaArea.setCellValueFactory(new PropertyValueFactory<>("area"));
         this.columnaPropietario.setCellValueFactory(new PropertyValueFactory<>("propietario"));
         this.columnaDisponibilidad.setCellValueFactory(new PropertyValueFactory<>("disponibilidad"));
+        this.columnaName.setCellValueFactory(new PropertyValueFactory<>("nombre"));
+        this.columnaIdPropietario.setCellValueFactory(new PropertyValueFactory<>("id"));
+        this.columnaNameCliente.setCellValueFactory(new PropertyValueFactory<>("nombre"));
+        this.columnaIdentificacionCliente.setCellValueFactory(new PropertyValueFactory<>("id"));
 
         }
 
