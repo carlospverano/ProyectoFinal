@@ -52,7 +52,7 @@ public class LoginController {
             result.setText("CREDENCIALES INCORRECTAS");
         }else if(userLogin instanceof Empleado){
             Parent parent = FXMLLoader.load(MainApp.class.getResource("empleado-view.fxml"));
-            Scene scene = new Scene(parent, 320, 240);
+            Scene scene = new Scene(parent, 900, 700);
             Stage stage = new Stage();
             stage.setTitle("Principal");
             stage.setScene(scene);
