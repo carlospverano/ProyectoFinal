@@ -2,12 +2,18 @@ package com.example.iniciosesion;
 
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.stage.Stage;
 import model.Empleado;
 import model.Genero;
 
+import java.io.IOException;
 import java.util.List;
 
 import static com.example.iniciosesion.AppController.INSTANCE;
@@ -40,11 +46,9 @@ public class AdministradorController {
     @FXML
     private TableView<Empleado> tbEmpleados;
     @FXML
-    private ObservableList<Empleado> empleados;
-    @FXML
     private Label labelMensaje;
-
-
+    @FXML
+    private Button btnCerrarSesion;
     Empleado empleadoSeleccionado;
 
     @FXML
@@ -118,5 +122,16 @@ public class AdministradorController {
             cbGenero.setValue(empleado.getGenero());
 
         }
+    }
+
+    public void onCerrarSesionClick( ) throws IOException {
+        Parent parent = FXMLLoader.load(MainApp.class.getResource("login.fxml"));
+        Scene scene = new Scene(parent, 600, 600);
+        Stage stage = new Stage();
+        stage.setTitle("ADMINISTRADOR");
+        stage.setScene(scene);
+        stage.initOwner(btnCerrarSesion.getScene().getWindow());
+        btnCerrarSesion.getScene().getWindow().hide();
+        stage.show();
     }
 }

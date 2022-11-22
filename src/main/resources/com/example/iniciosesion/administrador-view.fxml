@@ -10,14 +10,20 @@
 <?import javafx.scene.layout.ColumnConstraints?>
 <?import javafx.scene.layout.GridPane?>
 <?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.Pane?>
 <?import javafx.scene.layout.RowConstraints?>
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<VBox alignment="CENTER" prefHeight="528.0" prefWidth="531.0" spacing="20.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.iniciosesion.AdministradorController">
+<VBox alignment="CENTER" prefHeight="528.0" prefWidth="804.0" spacing="20.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.iniciosesion.AdministradorController">
     <padding>
         <Insets bottom="20.0" left="20.0" right="20.0" top="20.0" />
     </padding>
+   <Pane prefHeight="44.0" prefWidth="658.0">
+      <children>
+         <Button fx:id="btnCerrarSesion" layoutX="632.0" layoutY="1.0" mnemonicParsing="false" onAction="#onCerrarSesionClick" prefHeight="27.0" prefWidth="130.0" text="Cerrar Sesion" />
+      </children>
+   </Pane>
     <GridPane>
         <columnConstraints>
             <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
@@ -47,10 +53,11 @@
         <TextField fx:id="tfContrasena" GridPane.columnIndex="1" GridPane.rowIndex="3" />
     </GridPane>
     <HBox prefHeight="41.0" prefWidth="301.0">
-        <Button fx:id="botRegistrar" mnemonicParsing="false" onAction="#onRegistrarClick" text="Registrar" />
-        <Button mnemonicParsing="false" onAction="#onRemoverClick" text="Bloquear" />
-        <Button mnemonicParsing="false" onAction="#onBuscarClick" text="Actualizar" />
-      <Label fx:id="labelMensaje" prefHeight="25.0" prefWidth="284.0">
+        <Button fx:id="botRegistrar" mnemonicParsing="false" onAction="#onRegistrarClick" prefHeight="25.0" prefWidth="74.0" text="Registrar" />
+        <Button mnemonicParsing="false" onAction="#onRemoverClick" prefHeight="25.0" prefWidth="88.0" text="Bloquear" />
+        <Button mnemonicParsing="false" onAction="#onBuscarClick" prefHeight="25.0" prefWidth="79.0" text="Actualizar" />
+      <Button mnemonicParsing="false" prefHeight="25.0" prefWidth="156.0" text="Visualizar reporte" />
+      <Label fx:id="labelMensaje" prefHeight="25.0" prefWidth="265.0">
          <font>
             <Font name="System Bold" size="15.0" />
          </font>
@@ -59,9 +66,9 @@
     <TableView fx:id="tbEmpleados" prefHeight="200.0" prefWidth="200.0">
         <columns>
             <TableColumn fx:id="colNumeroIdentificacion" prefWidth="139.0" text="Número Identificación" />
-            <TableColumn fx:id="colNombre" prefWidth="89.0" text="Nombre" />
-            <TableColumn fx:id="colGenero" prefWidth="63.0" text="Genero" />
-            <TableColumn fx:id="colCorreo" prefWidth="63.0" text="Correo" />
+            <TableColumn fx:id="colNombre" prefWidth="124.0" text="Nombre" />
+            <TableColumn fx:id="colGenero" prefWidth="116.0" text="Genero" />
+            <TableColumn fx:id="colCorreo" prefWidth="230.0" text="Correo" />
         </columns>
     </TableView>
 </VBox>
