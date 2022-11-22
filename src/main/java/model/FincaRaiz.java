@@ -91,7 +91,7 @@ public class FincaRaiz {
     public void registrarPropietario(Propietario propietario, Empleado empleado) throws Exception{
 
 
-        if (empleado.isEstado() == true) {
+        if (empleado.getEstado() == Estado.ACTIVO) {
             String dirrecion1 = propietario.getNombre();
             Propietario propietarioAux = propietarios.stream().filter(propietario1 -> propietario1.getNombre() == dirrecion1).findFirst().orElse(null);
             if (propietarioAux != null) {
@@ -110,7 +110,7 @@ public class FincaRaiz {
 
     public void registrarCliente (Cliente cliente,Empleado empleado)throws Exception{
 
-        if (empleado.isEstado() == true) {
+        if (empleado.getEstado() == Estado.ACTIVO) {
             String dirrecion1 = empleado.getId();
             Empleado propietarioAux = empleados.stream().filter(empleado1 -> empleado1.getNombre() == dirrecion1).findFirst().orElse(null);
             if (propietarioAux != null) {
@@ -258,23 +258,14 @@ public class FincaRaiz {
 
         return listaReporte;
     }
-    public void bloquearCuenta(Usuario usuario,Empleado empleado){
-
-        if (usuario instanceof Administrador) {
-            Empleado empleadoAux = empleado;
-            empleado = empleados.stream().filter(empleados -> empleados.getId() == empleadoAux.getId()).findFirst().orElse(null);
-            if (empleado != null) {
-                empleado.setEstado(false);
-            }else {
-                System.out.println("Datos invalidos.");
-            }
-        }else {
-            System.out.println("Solo los administradores pueden bloquear cuentas");
+    public void bloquearCuenta(Empleado empleado){
+        if (empleado != null){
+            empleado.setEstado(Estado.BLOQUEADO);
         }
     }
 
 
-    public void actualizarDatosEmpleado(Usuario usuario, Empleado empleado, String nombre, String userId, String password, boolean estado) throws Exception {
+    public void actualizarDatosEmpleado(Usuario usuario, Empleado empleado, String nombre, String userId, String password, Estado estado) throws Exception {
 
         if (usuario instanceof Administrador) {
             Empleado empleadoAux = empleado;
@@ -303,10 +294,12 @@ public class FincaRaiz {
 
         if (administrador!=null){
             return administrador;
+
         } else if (empleado!=null) {
+
             return empleado;
-        }
-        else {
+
+        } else {
             return null;
         }
 

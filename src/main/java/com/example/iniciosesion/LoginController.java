@@ -15,6 +15,7 @@ import static com.example.iniciosesion.AppController.INSTANCE;
 import javafx.stage.Stage;
 import model.Administrador;
 import model.Empleado;
+import model.Estado;
 import model.Usuario;
 
 import java.io.IOException;
@@ -51,12 +52,18 @@ public class LoginController {
             passwordField.setText("");
             result.setText("CREDENCIALES INCORRECTAS");
         }else if(userLogin instanceof Empleado){
-            Parent parent = FXMLLoader.load(MainApp.class.getResource("empleado-view.fxml"));
-            Scene scene = new Scene(parent, 900, 700);
-            Stage stage = new Stage();
-            stage.setTitle("Principal");
-            stage.setScene(scene);
-            stage.show();
+            if(((Empleado) userLogin).getEstado() == Estado.BLOQUEADO){
+                result.setText("EL USUARIO ESTA BLOQUEADO");
+            }else{
+                Parent parent = FXMLLoader.load(MainApp.class.getResource("empleado-view.fxml"));
+                Scene scene = new Scene(parent, 900, 700);
+                Stage stage = new Stage();
+                stage.setTitle("EMPLEADO");
+                stage.setScene(scene);
+                stage.initOwner(btnLogin.getScene().getWindow());
+                btnLogin.getScene().getWindow().hide();
+                stage.show();
+            }
         }else{
             Parent parent = FXMLLoader.load(MainApp.class.getResource("administrador-view.fxml"));
             Scene scene = new Scene(parent, 800, 600);

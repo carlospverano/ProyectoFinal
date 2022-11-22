@@ -1,24 +1,25 @@
 package model;
 
 public class Empleado extends Usuario {
-    private  boolean estado = true;
 
     private String nombre;
     private Genero genero;
     private String id;
     private String email;
+    private Estado estado;
 
 
     public Empleado(String nombre, String email, String id, String password, Genero genero) {
         super(nombre,id,email,password);
         this.genero = genero;
+        estado = Estado.ACTIVO;
     }
 
-    public boolean isEstado() {
+    public Estado getEstado() {
         return estado;
     }
 
-    public void setEstado(boolean estado) {
+    public void setEstado(Estado estado) {
         this.estado = estado;
     }
 

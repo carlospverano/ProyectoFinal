@@ -11,6 +11,7 @@ import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.stage.Stage;
 import model.Empleado;
+import model.Estado;
 import model.Genero;
 
 import java.io.IOException;
@@ -42,6 +43,8 @@ public class AdministradorController {
     @FXML
     private TableColumn <Empleado, Genero > colGenero;
     @FXML
+    private TableColumn <Empleado, Estado> colEstado;
+    @FXML
     private TableColumn <Empleado, String > colCorreo;
     @FXML
     private TableView<Empleado> tbEmpleados;
@@ -59,6 +62,7 @@ public class AdministradorController {
         colNombre.setCellValueFactory(new PropertyValueFactory<>("nombre"));
         colCorreo.setCellValueFactory(new PropertyValueFactory<>("email"));
         colGenero.setCellValueFactory(new PropertyValueFactory<>("genero"));
+        colEstado.setCellValueFactory(new PropertyValueFactory<>("estado"));
 
         cbGenero.setItems(FXCollections.observableArrayList(Genero.values()));
 
@@ -95,9 +99,9 @@ public class AdministradorController {
     public void onBuscarClick() {
 
     }
-
-    public void adicionarNota() {
-
+    public void onBloquearClick(){
+        INSTANCE.getModel().bloquearCuenta(empleadoSeleccionado);
+        llenarTabla(INSTANCE.getModel().getEmpleados());
     }
 
     private void llenarTabla(List<Empleado> empleados) {
@@ -134,4 +138,5 @@ public class AdministradorController {
         btnCerrarSesion.getScene().getWindow().hide();
         stage.show();
     }
+
 }
