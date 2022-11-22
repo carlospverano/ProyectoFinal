@@ -7,13 +7,16 @@ public class Propiedad {
     private double area;
     private Propietario propietario;
     private Disponibilidad disponibilidad;
+    private String tipoPropiedad;
 
-    public Propiedad(String direccion, double valor, double area, Propietario propietario, Disponibilidad disponibilidad) {
+    public Propiedad(String direccion, double valor, double area, Propietario propietario, String tipoPropiedad) {
         this.direccion = direccion;
         this.valor = valor;
         this.area = area;
         this.propietario = propietario;
-        this.disponibilidad = disponibilidad;
+        this.disponibilidad = Disponibilidad.DISPONIBLE;
+        this.tipoPropiedad = tipoPropiedad;
+
     }
 
     public String getDireccion() {
@@ -65,5 +68,9 @@ public class Propiedad {
                 ", propietario=" + propietario +
                 ", disponibilidad=" + disponibilidad +
                 '}';
+    }
+
+    public String getTipoPropiedad(){
+        return this.tipoPropiedad;
     }
 }

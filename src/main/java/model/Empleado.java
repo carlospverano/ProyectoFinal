@@ -27,4 +27,7 @@ public class Empleado extends Usuario {
         return genero;
     }
 
+    public void setGenero(Genero genero) {
+        this.genero = genero;
+    }
 }

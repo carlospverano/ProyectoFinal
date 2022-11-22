@@ -12,6 +12,7 @@ public class FincaRaiz {
     private List <Cliente> clientes;
     private List <Empleado> empleados;
     private List <Administrador> administradores;
+    private List<String> tipoPropiedaes;
 
     public List<Propietario> getPropietarios() {
         return propietarios;
@@ -43,10 +44,16 @@ public class FincaRaiz {
         propietarios = new ArrayList<>();
         transacciones = new ArrayList<>();
 
-            Administrador admin = new Administrador("admin", "001", "admin@fincaraiz.com", "admin");
-        Empleado empleadox= new Empleado("Alejandra","aleja@mail.com","1245","8etbs",Genero.FEMENINO);
+        Administrador admin = new Administrador("admin", "001", "admin@fincaraiz.com", "admin");
+                Empleado empleadox= new Empleado("Alejandra","aleja@mail.com","1245","8etbs",Genero.FEMENINO);
         empleados.add(empleadox);
         administradores.add(admin);
+
+        tipoPropiedaes = new ArrayList<String>();
+        tipoPropiedaes.add("Casa");
+        tipoPropiedaes.add("Parqueadero");
+        tipoPropiedaes.add("Bodega");
+        tipoPropiedaes.add("Chalet");
     }
 
 
@@ -81,11 +88,22 @@ public class FincaRaiz {
     public void setAdministradores(List<Administrador> administradores) {
         this.administradores = administradores;
     }
-    public void registrarPropiedad(Propiedad propiedad) throws Exception {
+    public Propiedad registrarPropiedad(String tipoPropieddad, String direccion, double valor, double area, Propietario propietario) throws Exception {
 
-       if (propiedad !=null){
-           propiedades.add(propiedad);
-       }
+        switch (tipoPropieddad){
+            case "Casa":
+                Casa casa = new Casa(direccion,valor,valor,propietario, "casa");
+                propiedades.add(casa);
+                return casa;
+
+            case "bodega":
+                propiedades.add(null);
+                break;
+
+            default:
+                return null;
+        }
+        return null;
 
     }
     public void registrarPropietario(Propietario propietario, Empleado empleado) throws Exception{
@@ -265,20 +283,16 @@ public class FincaRaiz {
     }
 
 
-    public void actualizarDatosEmpleado(Usuario usuario, Empleado empleado, String nombre, String userId, String password, Estado estado) throws Exception {
+    public void actualizarDatosEmpleado(Empleado empleadoSelecionado, Empleado empleado) throws Exception {
 
-        if (usuario instanceof Administrador) {
-            Empleado empleadoAux = empleado;
-            empleado = empleados.stream().filter(empleados -> empleados.getId() == empleadoAux.getId()).findFirst().orElse(null);
-            if (empleado != null) {
-                empleado.setNombre(nombre);
-                empleado.setId(userId);
-                empleado.setPassword(password);
-                empleado.setEstado(estado);
-            }
-        } else {
-            throw new Exception("Solo los administradores pueden actualizar empleados");
+        if (empleado != null && empleadoSelecionado != null){
+            empleadoSelecionado.setNombre(empleado.getNombre());
+            empleadoSelecionado.setEmail(empleado.getEmail());
+            empleadoSelecionado.setId(empleado.getId());
+            empleadoSelecionado.setPassword(empleado.getPassword());
+            empleadoSelecionado.setGenero(empleado.getGenero());
         }
+
     }
 
     public Usuario autenticar (String email, String password){
@@ -323,5 +337,9 @@ public class FincaRaiz {
     public void menuCliente() {
         System.out.println("1.Comprar");
         System.out.println("2.Alquilar");
+    }
+
+    public List<String> getTipoPropiedaes(){
+        return this.tipoPropiedaes;
     }
 }

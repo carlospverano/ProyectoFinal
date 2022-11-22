@@ -55,7 +55,7 @@
     <HBox prefHeight="41.0" prefWidth="301.0">
         <Button fx:id="botRegistrar" mnemonicParsing="false" onAction="#onRegistrarClick" prefHeight="25.0" prefWidth="74.0" text="Registrar" />
         <Button fx:id="btnBloquear" mnemonicParsing="false" onAction="#onBloquearClick" prefHeight="25.0" prefWidth="88.0" text="Bloquear" />
-        <Button mnemonicParsing="false" onAction="#onBuscarClick" prefHeight="25.0" prefWidth="79.0" text="Actualizar" />
+        <Button mnemonicParsing="false" onAction="#onActualizarClick" prefHeight="25.0" prefWidth="79.0" text="Actualizar" />
       <Button mnemonicParsing="false" prefHeight="25.0" prefWidth="156.0" text="Visualizar reporte" />
       <Label fx:id="labelMensaje" prefHeight="25.0" prefWidth="265.0">
          <font>

@@ -63,6 +63,9 @@ public class EmpleadoController implements Initializable {
 
     @FXML
     private TableColumn<Propiedad, Double> columnaValor;
+    @FXML
+    private TableColumn<Propiedad, String> colTipo;
+
 
     @FXML
     private TableView<Propietario> tablaPropietarios;
@@ -83,6 +86,9 @@ public class EmpleadoController implements Initializable {
     @FXML
     private TableColumn<Cliente, String> columnaIdentificacionCliente;
 
+    @FXML
+    private ComboBox<String> cbTipoPropiedad;
+
 
 
     @FXML
@@ -92,23 +98,20 @@ public class EmpleadoController implements Initializable {
     }
     public void eventAction(ActionEvent actionEvent) {
     }
-    public void registrar() {
+    public void registrarPropiedad() {
 
         String direccionRegistrada = direccion.getText();
-
         String valorPropiedad = (valor.getText());
-
         String areaPropiedad = area.getText();
-
         Propietario propietarioP= combopropietario.getValue();
-
-        Propiedad propiedad= new Propiedad(direccionRegistrada,Double.parseDouble(valorPropiedad),Double.parseDouble(areaPropiedad),propietarioP,Disponibilidad.DISPONIBLE);
-        propiedades.add(propiedad);
-        tablaPropiedades.setItems(propiedades);
-        tablaPropiedades.refresh(); //Actualiza la tabla
+        String tipoPropiedad = cbTipoPropiedad.getValue();
 
         try {
-            finca.registrarPropiedad(propiedad);
+            Propiedad propiedadRegistrada = finca.registrarPropiedad(tipoPropiedad, direccionRegistrada, Double.parseDouble(valorPropiedad), Double.parseDouble(areaPropiedad), propietarioP);
+            propiedades.add(propiedadRegistrada);
+            tablaPropiedades.setItems(propiedades);
+            tablaPropiedades.refresh(); //Actualiza la tabla
+            limpiarCampos();
         }
         catch (Exception e){
             e.getMessage();
@@ -126,6 +129,9 @@ public class EmpleadoController implements Initializable {
         tablaPropietarios.refresh(); //Actualiza la tabla
         try {
             finca.registrarPropietario(propietario1, finca.getEmpleados().get(0));
+            combopropietario.setItems(propietarios);
+            limpiarCampos();
+
         }
         catch (Exception e){
             e.getMessage();
@@ -144,6 +150,8 @@ public class EmpleadoController implements Initializable {
         tablaClientes.refresh(); //Actualiza la tabla
         try {
             finca.registrarCliente(cliente, finca.getEmpleados().get(0));
+            limpiarCampos();
+
         }
         catch (Exception e){
             e.getMessage();
@@ -155,13 +163,17 @@ public class EmpleadoController implements Initializable {
     public void initialize(URL url, ResourceBundle resourceBundle) {
 
         combopropietario.getItems().addAll(finca.getPropietarios());
+        cbTipoPropiedad.getItems().addAll(finca.getTipoPropiedaes());
         this.columnaValor.setCellValueFactory(new PropertyValueFactory<>("valor"));
         this.columnaDireccion.setCellValueFactory(new PropertyValueFactory<>("direccion"));
         this.columnaArea.setCellValueFactory(new PropertyValueFactory<>("area"));
         this.columnaPropietario.setCellValueFactory(new PropertyValueFactory<>("propietario"));
         this.columnaDisponibilidad.setCellValueFactory(new PropertyValueFactory<>("disponibilidad"));
+        this.colTipo.setCellValueFactory(new PropertyValueFactory<>("tipoPropiedad"));
+
         this.columnaName.setCellValueFactory(new PropertyValueFactory<>("nombre"));
         this.columnaIdPropietario.setCellValueFactory(new PropertyValueFactory<>("id"));
+
         this.columnaNameCliente.setCellValueFactory(new PropertyValueFactory<>("nombre"));
         this.columnaIdentificacionCliente.setCellValueFactory(new PropertyValueFactory<>("id"));
 
@@ -171,4 +183,12 @@ public class EmpleadoController implements Initializable {
         tablaPropiedades.setItems(FXCollections.observableArrayList(propiedadList));
         tablaPropiedades.refresh();
     }
+    private void limpiarCampos() {
+        nombre.setText("");
+        valor.setText("");
+        area.setText("");
+        cbTipoPropiedad.setValue(null);
+        combopropietario.setValue(null);
+
     }
+}

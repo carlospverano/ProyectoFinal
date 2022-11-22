@@ -96,8 +96,15 @@ public class AdministradorController {
 
     }
 
-    public void onBuscarClick() {
+    public void onActualizarClick() throws Exception {
+        String id = tfNumeroIdentificacion.getText();
+        String nombre = tfNombre.getText();
+        String correo = tfCorreo.getText();
+        String contrase = tfContrasena.getText();
+        Genero genero = (Genero) cbGenero.getValue();
 
+        INSTANCE.getModel().actualizarDatosEmpleado(empleadoSeleccionado, new Empleado(nombre, correo, id,contrase,genero));
+        llenarTabla(INSTANCE.getModel().getEmpleados());
     }
     public void onBloquearClick(){
         INSTANCE.getModel().bloquearCuenta(empleadoSeleccionado);
