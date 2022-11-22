@@ -43,21 +43,10 @@ public class FincaRaiz {
         propietarios = new ArrayList<>();
         transacciones = new ArrayList<>();
 
-        Administrador admin = new Administrador("admin", "001", "admin@fincaraiz.com", "admin");
-        Empleado empleadox= new Empleado("Alejandra","aleja@mail.com","1245","8etbs",true);
+            Administrador admin = new Administrador("admin", "001", "admin@fincaraiz.com", "admin");
+        Empleado empleadox= new Empleado("Alejandra","aleja@mail.com","1245","8etbs",Genero.FEMENINO);
         empleados.add(empleadox);
         administradores.add(admin);
-
-        propietarios.add(new Propietario("Alejandra","2345"));
-        propietarios.add(new Propietario("Carlos","34567"));
-        propietarios.add(new Propietario("Brahian","87654"));
-        propietarios.add(new Propietario("Jojan","765432"));
-        propietarios.add(new Propietario("Harold","98776"));
-        propietarios.add(new Propietario("Camilo","87654"));
-        propietarios.add(new Propietario("Sebastian","8765"));
-        propietarios.add(new Propietario("Alejandro","23456"));
-        propietarios.add(new Propietario("Nathan","09876"));
-        propietarios.add(new Propietario("Noah","987654"));
     }
 
 
@@ -219,24 +208,23 @@ public class FincaRaiz {
         }).collect(Collectors.toList());
     }
 
-    public void registrarEmpleado(Empleado empleado, Administrador administrador) throws Exception {
+    public Empleado registrarEmpleado(Empleado empleadoNuevo) throws Exception {
 
+        if (empleadoNuevo != null){
 
-        if (administrador instanceof Administrador) {
-            String userId1 = empleado.getId();
-            Empleado empleadoAux = empleados.stream().filter(empleado1 -> empleado1.getId() == userId1).findFirst().orElse(null);
-            if (empleadoAux != null) {
-                throw new Exception("La propiedad ya existe");
-            } else if (empleado != null) {
+            Empleado empleadoEncontrado = empleados.stream().filter((emp) -> emp.getId().equals(empleadoNuevo.getId())).findFirst().orElse(null);
 
-                empleados.add(empleado);
-            } else {
-                throw new Exception("Datos invalidos");
+            if(empleadoEncontrado instanceof Empleado){
+                return null;
+            }else{
+                empleados.add(empleadoNuevo);
+                return empleadoNuevo;
             }
-        } else {
-            throw new Exception("Solo los empleados pueden registrar propiedades");
+
 
         }
+
+        return null;
     }
     public ArrayList<ReporteVentasPorEmpleado> visualizarReporte(LocalDateTime fechaInicio, LocalDateTime fechaFinal, String idEmpleado){
         ArrayList<ReporteVentasPorEmpleado> listaReporte = new ArrayList<ReporteVentasPorEmpleado>();

@@ -19,9 +19,11 @@ import java.util.ResourceBundle;
 
 public class EmpleadoController implements Initializable {
     Propiedad propiedadSeleccionado;
-
+    @FXML
     private ObservableList<Propiedad> propiedades = FXCollections.observableArrayList(); //Lista para mostrar en la tabla
+    @FXML
     private ObservableList<Propietario> propietarios = FXCollections.observableArrayList();
+    @FXML
     private ObservableList<Cliente> clientes = FXCollections.observableArrayList();
     @FXML
     private TextField nombre;

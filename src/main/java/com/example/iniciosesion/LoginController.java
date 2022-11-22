@@ -59,7 +59,7 @@ public class LoginController {
             stage.show();
         }else{
             Parent parent = FXMLLoader.load(MainApp.class.getResource("administrador-view.fxml"));
-            Scene scene = new Scene(parent, 320, 240);
+            Scene scene = new Scene(parent, 600, 600);
             Stage stage = new Stage();
             stage.setTitle("ADMINISTRADOR");
             stage.setScene(scene);
