@@ -10,6 +10,7 @@ import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.stage.Stage;
+import model.Cliente;
 import model.Empleado;
 import model.Estado;
 import model.Genero;
@@ -79,17 +80,26 @@ public class AdministradorController {
         String contrasena = tfContrasena.getText();
         Genero genero = (Genero) cbGenero.getValue();
 
-        Empleado empleadoRegistrado = INSTANCE.getModel().registrarEmpleado(new Empleado(nombre,correo,id,contrasena, genero));
+        try {
+            Empleado empleadoEncontrado = INSTANCE.getModel().getEmpleados().stream().filter((emp)-> emp.getId().equals(id)).findFirst().orElse(null);
 
-        if(empleadoRegistrado instanceof Empleado){
+            if(empleadoEncontrado instanceof Empleado){
+                mostrarMensajeAdvertencia("EL EMPLEADO YA ESTA REGISTRADO");
 
-            llenarTabla(INSTANCE.getModel().getEmpleados());
-            limpiarCampos();
-        }else{
-            labelMensaje.setText("EL EMPLEADO YA ESTA REGISTRADO.");
-            limpiarCampos();
+            }else{
+                Empleado empleado = INSTANCE.getModel().registrarEmpleado(new Empleado(nombre,correo,id,contrasena,genero));
+                if (empleado != null){
+                    llenarTabla(INSTANCE.getModel().getEmpleados());
+                    limpiarCampos();
+                    mostrarMensajeInformacion("SE AÑADIO CORRECTAMENTE EL CLIENTE");
+                }else{
+                    mostrarMensajeAdvertencia("LLENE TODOS LOS CAMPOS.");
+                }
+            }
         }
-
+        catch (Exception e){
+            e.getMessage();
+        }
     }
 
     public void onRemoverClick() {
@@ -144,6 +154,19 @@ public class AdministradorController {
         stage.initOwner(btnCerrarSesion.getScene().getWindow());
         btnCerrarSesion.getScene().getWindow().hide();
         stage.show();
+    }
+
+    private void mostrarMensajeAdvertencia(String mensaje) {
+        Alert alert = new Alert(Alert.AlertType.WARNING);
+        alert.setTitle("Advertencia");
+        alert.setContentText(mensaje);
+        alert.showAndWait();
+    }
+    private void mostrarMensajeInformacion(String mensaje) {
+        Alert alert = new Alert(Alert.AlertType.INFORMATION);
+        alert.setTitle("Información");
+        alert.setContentText(mensaje);
+        alert.showAndWait();
     }
 
 }

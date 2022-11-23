@@ -84,44 +84,49 @@ public class FincaRaiz {
     }
     public Propiedad registrarPropiedad(String tipoPropieddad, String direccion, double valor, double area, Propietario propietario) throws Exception {
 
-        switch (tipoPropieddad){
-            case "Casa":
-                Casa casa = new Casa(direccion,valor,area,propietario, "casa");
-                propiedades.add(casa);
-                return casa;
+        if(direccion.equals("") || tipoPropieddad.equals("")){
+            return null;
+        }else{
+            switch (tipoPropieddad){
+                case "Casa":
+                    Casa casa = new Casa(direccion,valor,area,propietario, "casa");
+                    propiedades.add(casa);
+                    return casa;
 
-            case "Bodega":
-                Bodega bodega = new Bodega(direccion, valor,area,propietario,"bodega");
-                propiedades.add(bodega);
-                return bodega;
+                case "Bodega":
+                    Bodega bodega = new Bodega(direccion, valor,area,propietario,"bodega");
+                    propiedades.add(bodega);
+                    return bodega;
 
-            case "Parqueadero":
-                Parqueadero parqueadero = new Parqueadero(direccion,valor,area,propietario,"parqueadero");
-                propiedades.add(parqueadero);
-                return parqueadero;
+                case "Parqueadero":
+                    Parqueadero parqueadero = new Parqueadero(direccion,valor,area,propietario,"parqueadero");
+                    propiedades.add(parqueadero);
+                    return parqueadero;
 
-            case "Edificio":
-                Edificio edificio = new Edificio(direccion, valor, area, propietario, "edificio");
-                propiedades.add(edificio);
-                return edificio;
+                case "Edificio":
+                    Edificio edificio = new Edificio(direccion, valor, area, propietario, "edificio");
+                    propiedades.add(edificio);
+                    return edificio;
 
-            case "Lote":
-                Lote lote = new Lote(direccion,valor,area,propietario,"lote");
-                propiedades.add(lote);
-                return lote;
+                case "Lote":
+                    Lote lote = new Lote(direccion,valor,area,propietario,"lote");
+                    propiedades.add(lote);
+                    return lote;
 
-            case "Apartamento":
-                Apartamento apartamento = new Apartamento(direccion,valor,area,propietario,"apartamento");
-                propiedades.add(apartamento);
-                return apartamento;
+                case "Apartamento":
+                    Apartamento apartamento = new Apartamento(direccion,valor,area,propietario,"apartamento");
+                    propiedades.add(apartamento);
+                    return apartamento;
 
-            case "Chalet":
-                Chalet chalet = new Chalet(direccion, valor,area,propietario,"chalet");
-                propiedades.add(chalet);
-                return chalet;
+                case "Chalet":
+                    Chalet chalet = new Chalet(direccion, valor,area,propietario,"chalet");
+                    propiedades.add(chalet);
+                    return chalet;
 
-            default:
-                return null;
+                default:
+                    return null;
+            }
+
         }
     }
         public Propietario registrarPropietario(Propietario propietario) throws Exception{
@@ -226,6 +231,9 @@ public class FincaRaiz {
 
     public Empleado registrarEmpleado(Empleado empleadoNuevo) throws Exception {
 
+        if(empleadoNuevo.getId().equals("") || empleadoNuevo.getNombre().equals("") || empleadoNuevo.getEmail().equals("") || empleadoNuevo.getPassword().equals("") || empleadoNuevo.getGenero().equals(null)){
+            return null;
+        }
         if (empleadoNuevo != null){
 
             Empleado empleadoEncontrado = empleados.stream().filter((emp) -> emp.getId().equals(empleadoNuevo.getId())).findFirst().orElse(null);

@@ -131,7 +131,7 @@ public class EmpleadoController implements Initializable {
             propiedades.add(propiedadRegistrada);
             tablaPropiedades.setItems(propiedades);
             tablaPropiedades.refresh(); //Actualiza la tabla
-            limpiarCampos();
+            limpiarCamposPropiedad();
         }
         catch (Exception e){
             e.getMessage();
@@ -205,11 +205,11 @@ public class EmpleadoController implements Initializable {
 
 
 
-    private void llenarTabla(List<Propiedad> propiedadList) {
+    /*private void llenarTabla(List<Propiedad> propiedadList) {
         tablaPropiedades.setItems(FXCollections.observableArrayList(propiedadList));
         tablaPropiedades.refresh();
-    }
-    private void limpiarCampos() {
+    }*/
+    private void limpiarCamposPropiedad() {
         //nombre.setText("");
         valor.setText("");
         area.setText("");
