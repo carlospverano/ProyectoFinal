@@ -12,6 +12,7 @@ import static com.example.iniciosesion.AppController.INSTANCE;
 import model.*;
 
 
+import java.lang.ref.Cleaner;
 import java.net.URL;
 import java.util.List;
 import java.util.ResourceBundle;
@@ -26,10 +27,9 @@ public class EmpleadoController implements Initializable {
     @FXML
     private ObservableList<Cliente> clientes = FXCollections.observableArrayList();
     @FXML
-    private TextField nombre;
-
+    private TextField nombrePropietario;
     @FXML
-    private TextField id;
+    private TextField idPropietario;
 
     FincaRaiz finca = INSTANCE.getModel();
 
@@ -89,7 +89,8 @@ public class EmpleadoController implements Initializable {
     @FXML
     private ComboBox<String> cbTipoPropiedad;
 
-
+    @FXML
+    private ComboBox<Cliente> cbClientes;
 
     @FXML
     private void comboboxEvents(ActionEvent e){}
@@ -97,6 +98,25 @@ public class EmpleadoController implements Initializable {
     public void eventKey(KeyEvent keyEvent) {
     }
     public void eventAction(ActionEvent actionEvent) {
+    }
+    @Override
+    public void initialize(URL url, ResourceBundle resourceBundle) {
+
+        combopropietario.getItems().addAll(finca.getPropietarios());
+        cbTipoPropiedad.getItems().addAll(finca.getTipoPropiedaes());
+        cbClientes.getItems().addAll(finca.getClientes());
+        this.columnaValor.setCellValueFactory(new PropertyValueFactory<>("valor"));
+        this.columnaDireccion.setCellValueFactory(new PropertyValueFactory<>("direccion"));
+        this.columnaArea.setCellValueFactory(new PropertyValueFactory<>("area"));
+        this.columnaPropietario.setCellValueFactory(new PropertyValueFactory<>("propietario"));
+        this.columnaDisponibilidad.setCellValueFactory(new PropertyValueFactory<>("disponibilidad"));
+        this.colTipo.setCellValueFactory(new PropertyValueFactory<>("tipoPropiedad"));
+
+        this.columnaName.setCellValueFactory(new PropertyValueFactory<>("nombre"));
+        this.columnaIdPropietario.setCellValueFactory(new PropertyValueFactory<>("id"));
+
+        this.columnaNameCliente.setCellValueFactory(new PropertyValueFactory<>("nombre"));
+        this.columnaIdentificacionCliente.setCellValueFactory(new PropertyValueFactory<>("id"));
     }
     public void registrarPropiedad() {
 
@@ -120,18 +140,27 @@ public class EmpleadoController implements Initializable {
 
     public void registrarPropietario () throws Exception {
 
-        String nombrePropietario = nombre.getText();
-        String identificacionPropietario= id.getText();
+        String nombre = nombrePropietario.getText();
+        String id= idPropietario.getText();
 
-        Propietario propietario1 = new Propietario(nombrePropietario,identificacionPropietario);
-        propietarios.add(propietario1);
-        tablaPropietarios.setItems(propietarios);
-        tablaPropietarios.refresh(); //Actualiza la tabla
         try {
-            finca.registrarPropietario(propietario1, finca.getEmpleados().get(0));
-            combopropietario.setItems(propietarios);
-            limpiarCampos();
-
+            Propietario propietarioEncontrado = INSTANCE.getModel().getPropietarios().stream().filter((client)-> client.getId().equals(id)).findFirst().orElse(null);
+            if(propietarioEncontrado instanceof Propietario) {
+                mostrarMensajeAdvertencia("EL PROPIETARIO YA ESTA REGISTRADO");
+                limpiarCamposPropietario();
+            }else{
+                Propietario propietario =  finca.registrarPropietario(new Propietario(nombre, id));
+                if (propietario != null){
+                    propietarios.add(propietario);
+                    combopropietario.setItems(propietarios);
+                    tablaPropietarios.setItems(propietarios);
+                    tablaPropietarios.refresh();
+                    limpiarCamposPropietario();
+                    mostrarMensajeInformacion("SE HA AÑADIDO CORRECTAMENTE EL PROPIETARIO.");
+                }else{
+                    mostrarMensajeAdvertencia("LLENE TODOS LOS CAMPOS.");
+                }
+            }
         }
         catch (Exception e){
             e.getMessage();
@@ -141,16 +170,31 @@ public class EmpleadoController implements Initializable {
 
     public void registrarCliente () throws Exception {
 
-        String nombreCliente1 = nombreCliente.getText();
-        String identificacionCliente= idCliente.getText();
+        String nombre = nombreCliente.getText();
+        String id= idCliente.getText();
 
-        Cliente cliente = new Cliente(nombreCliente1,identificacionCliente);
-        clientes.add(cliente);
-        tablaClientes.setItems(clientes);
-        tablaClientes.refresh(); //Actualiza la tabla
         try {
-            finca.registrarCliente(cliente, finca.getEmpleados().get(0));
-            limpiarCampos();
+            Cliente clienteEncontrado = INSTANCE.getModel().getClientes().stream().filter((client)-> client.getId().equals(id)).findFirst().orElse(null);
+
+            if(clienteEncontrado instanceof Cliente){
+                mostrarMensajeAdvertencia("EL CLIENTE YA ESTA REGISTRADO");
+                limpiarCamposCliente();
+            }else{
+                Cliente cliente = finca.registrarCliente(new Cliente(nombre,id));
+                limpiarCamposCliente();
+
+                if (cliente != null){
+                    clientes.add(cliente);
+                    cbClientes.setItems(clientes);
+                    tablaClientes.setItems(clientes);
+                    tablaClientes.refresh(); //Actualiza la tabla
+
+                    mostrarMensajeInformacion("SE AÑADIO CORRECTAMENTE EL CLIENTE");
+                }else{
+                    mostrarMensajeAdvertencia("LLENE TODOS LOS CAMPOS.");
+                }
+            }
+
 
         }
         catch (Exception e){
@@ -159,36 +203,40 @@ public class EmpleadoController implements Initializable {
 
     }
 
-    @Override
-    public void initialize(URL url, ResourceBundle resourceBundle) {
 
-        combopropietario.getItems().addAll(finca.getPropietarios());
-        cbTipoPropiedad.getItems().addAll(finca.getTipoPropiedaes());
-        this.columnaValor.setCellValueFactory(new PropertyValueFactory<>("valor"));
-        this.columnaDireccion.setCellValueFactory(new PropertyValueFactory<>("direccion"));
-        this.columnaArea.setCellValueFactory(new PropertyValueFactory<>("area"));
-        this.columnaPropietario.setCellValueFactory(new PropertyValueFactory<>("propietario"));
-        this.columnaDisponibilidad.setCellValueFactory(new PropertyValueFactory<>("disponibilidad"));
-        this.colTipo.setCellValueFactory(new PropertyValueFactory<>("tipoPropiedad"));
-
-        this.columnaName.setCellValueFactory(new PropertyValueFactory<>("nombre"));
-        this.columnaIdPropietario.setCellValueFactory(new PropertyValueFactory<>("id"));
-
-        this.columnaNameCliente.setCellValueFactory(new PropertyValueFactory<>("nombre"));
-        this.columnaIdentificacionCliente.setCellValueFactory(new PropertyValueFactory<>("id"));
-
-        }
 
     private void llenarTabla(List<Propiedad> propiedadList) {
         tablaPropiedades.setItems(FXCollections.observableArrayList(propiedadList));
         tablaPropiedades.refresh();
     }
     private void limpiarCampos() {
-        nombre.setText("");
+        //nombre.setText("");
         valor.setText("");
         area.setText("");
         cbTipoPropiedad.setValue(null);
         combopropietario.setValue(null);
 
+    }
+
+    private void mostrarMensajeAdvertencia(String mensaje) {
+        Alert alert = new Alert(Alert.AlertType.WARNING);
+        alert.setTitle("Advertencia");
+        alert.setContentText(mensaje);
+        alert.showAndWait();
+    }
+    private void mostrarMensajeInformacion(String mensaje) {
+        Alert alert = new Alert(Alert.AlertType.INFORMATION);
+        alert.setTitle("Información");
+        alert.setContentText(mensaje);
+        alert.showAndWait();
+    }
+
+    public void limpiarCamposPropietario(){
+        nombrePropietario.setText("");
+        idPropietario.setText("");
+    }
+    public void limpiarCamposCliente(){
+        nombreCliente.setText("");
+        idCliente.setText("");
     }
 }

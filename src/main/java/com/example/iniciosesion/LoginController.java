@@ -56,7 +56,7 @@ public class LoginController {
                 result.setText("EL USUARIO ESTA BLOQUEADO");
             }else{
                 Parent parent = FXMLLoader.load(MainApp.class.getResource("empleado-view.fxml"));
-                Scene scene = new Scene(parent, 900, 700);
+                Scene scene = new Scene(parent, 1000, 600);
                 Stage stage = new Stage();
                 stage.setTitle("EMPLEADO");
                 stage.setScene(scene);

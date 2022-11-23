@@ -25,7 +25,7 @@ public class FincaRaiz {
         transacciones = new ArrayList<>();
 
         Administrador admin = new Administrador("admin", "001", "admin@fincaraiz.com", "admin");
-        Empleado empleadox= new Empleado("Alejandra","aleja@mail.com","1245","8etbs",Genero.FEMENINO);
+        Empleado empleadox= new Empleado("Alejandra","aleja","1245","123",Genero.FEMENINO);
         empleados.add(empleadox);
         administradores.add(admin);
 
@@ -124,43 +124,23 @@ public class FincaRaiz {
                 return null;
         }
     }
-    public void registrarPropietario(Propietario propietario, Empleado empleado) throws Exception{
+        public Propietario registrarPropietario(Propietario propietario) throws Exception{
 
-
-        if (empleado.getEstado() == Estado.ACTIVO) {
-            String dirrecion1 = propietario.getNombre();
-            Propietario propietarioAux = propietarios.stream().filter(propietario1 -> propietario1.getNombre() == dirrecion1).findFirst().orElse(null);
-            if (propietarioAux != null) {
-                throw new Exception("La propiedad ya existe");
-            } else if (propietario!= null) {
-
-                propietarios.add(propietario);
-            } else {
-                throw new Exception("Datos invalidos");
-            }
-        } else {
-            throw new Exception("Solo los empleados pueden registrar propiedades");
-
+        if(propietario.getNombre().equals("") || propietario.getId().equals("")){
+            return null;
         }
+        propietarios.add(propietario);
+        return propietario;
     }
 
-    public void registrarCliente (Cliente cliente,Empleado empleado)throws Exception{
+    public Cliente registrarCliente (Cliente cliente)throws Exception{
 
-        if (empleado.getEstado() == Estado.ACTIVO) {
-            String dirrecion1 = empleado.getId();
-            Empleado propietarioAux = empleados.stream().filter(empleado1 -> empleado1.getNombre() == dirrecion1).findFirst().orElse(null);
-            if (propietarioAux != null) {
-                throw new Exception("La propiedad ya existe");
-            } else if (cliente!= null) {
-
-                clientes.add(cliente);
-            } else {
-                throw new Exception("Datos invalidos");
-            }
-        } else {
-            throw new Exception("Solo los empleados pueden registrar propiedades");
-
+        if(cliente.getNombre().equals("") || cliente.getId().equals("")){
+            return null;
         }
+        clientes.add(cliente);
+        return cliente;
+
     }
     public void alquiler (Empleado empleado, Cliente cliente, Propiedad propiedad){
         String disponibilidad = propiedad.getDisponibilidad().toString();
