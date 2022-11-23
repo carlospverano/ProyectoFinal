@@ -13,28 +13,8 @@ public class FincaRaiz {
     private List <Empleado> empleados;
     private List <Administrador> administradores;
     private List<String> tipoPropiedaes;
-
-    public List<Propietario> getPropietarios() {
-        return propietarios;
-    }
-
-    public void setPropietarios(List<Propietario> propietarios) {
-        this.propietarios = propietarios;
-    }
-
-    public List<Transaccion> getTransacciones() {
-        return transacciones;
-    }
-
-    public void setTransacciones(List<Transaccion> transacciones) {
-        this.transacciones = transacciones;
-    }
-
     private  List <Propietario> propietarios;
     private List<Transaccion> transacciones;
-
-    Scanner teclado = new Scanner(System.in);
-
 
     public FincaRaiz(){
         propiedades = new ArrayList<>();
@@ -45,17 +25,31 @@ public class FincaRaiz {
         transacciones = new ArrayList<>();
 
         Administrador admin = new Administrador("admin", "001", "admin@fincaraiz.com", "admin");
-                Empleado empleadox= new Empleado("Alejandra","aleja@mail.com","1245","8etbs",Genero.FEMENINO);
+        Empleado empleadox= new Empleado("Alejandra","aleja@mail.com","1245","8etbs",Genero.FEMENINO);
         empleados.add(empleadox);
         administradores.add(admin);
 
         tipoPropiedaes = new ArrayList<String>();
-        tipoPropiedaes.add("Casa");
-        tipoPropiedaes.add("Parqueadero");
+        tipoPropiedaes.add("Apartamento");
         tipoPropiedaes.add("Bodega");
+        tipoPropiedaes.add("Casa");
         tipoPropiedaes.add("Chalet");
+        tipoPropiedaes.add("Edificio");
+        tipoPropiedaes.add("Lote");
+        tipoPropiedaes.add("Parqueadero");
+
+    }
+    public List<Propietario> getPropietarios() {
+        return propietarios;
     }
 
+    public List<Transaccion> getTransacciones() {
+        return transacciones;
+    }
+
+    public void setTransacciones(List<Transaccion> transacciones) {
+        this.transacciones = transacciones;
+    }
 
     public List<Propiedad> getPropiedades() {
         return propiedades;
@@ -92,19 +86,43 @@ public class FincaRaiz {
 
         switch (tipoPropieddad){
             case "Casa":
-                Casa casa = new Casa(direccion,valor,valor,propietario, "casa");
+                Casa casa = new Casa(direccion,valor,area,propietario, "casa");
                 propiedades.add(casa);
                 return casa;
 
-            case "bodega":
-                propiedades.add(null);
-                break;
+            case "Bodega":
+                Bodega bodega = new Bodega(direccion, valor,area,propietario,"bodega");
+                propiedades.add(bodega);
+                return bodega;
+
+            case "Parqueadero":
+                Parqueadero parqueadero = new Parqueadero(direccion,valor,area,propietario,"parqueadero");
+                propiedades.add(parqueadero);
+                return parqueadero;
+
+            case "Edificio":
+                Edificio edificio = new Edificio(direccion, valor, area, propietario, "edificio");
+                propiedades.add(edificio);
+                return edificio;
+
+            case "Lote":
+                Lote lote = new Lote(direccion,valor,area,propietario,"lote");
+                propiedades.add(lote);
+                return lote;
+
+            case "Apartamento":
+                Apartamento apartamento = new Apartamento(direccion,valor,area,propietario,"apartamento");
+                propiedades.add(apartamento);
+                return apartamento;
+
+            case "Chalet":
+                Chalet chalet = new Chalet(direccion, valor,area,propietario,"chalet");
+                propiedades.add(chalet);
+                return chalet;
 
             default:
                 return null;
         }
-        return null;
-
     }
     public void registrarPropietario(Propietario propietario, Empleado empleado) throws Exception{
 
