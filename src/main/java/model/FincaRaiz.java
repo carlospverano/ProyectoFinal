@@ -129,7 +129,7 @@ public class FincaRaiz {
 
         }
     }
-        public Propietario registrarPropietario(Propietario propietario) throws Exception{
+    public Propietario registrarPropietario(Propietario propietario) throws Exception{
 
         if(propietario.getNombre().equals("") || propietario.getId().equals("")){
             return null;
@@ -220,13 +220,11 @@ public class FincaRaiz {
     	}*/
 
     }
-    public List<String> buscarPropiedad(String propiedad){
+    public List<Propiedad> buscarPropiedad(String propiedad){
 
-        return propiedades.stream().map( (propiedad1) -> {
-            return propiedad1.getClass().getSimpleName();
-        }).filter( (propiedad2)-> {
-            return propiedad2.equalsIgnoreCase(propiedad);
-        }).collect(Collectors.toList());
+        return propiedades.stream().filter((prop) -> {
+            return prop.getClass().getSimpleName().equals(propiedad) && prop.getDisponibilidad().equals(Disponibilidad.DISPONIBLE);
+        }).collect(Collectors.toUnmodifiableList());
     }
 
     public Empleado registrarEmpleado(Empleado empleadoNuevo) throws Exception {
@@ -288,7 +286,6 @@ public class FincaRaiz {
         }
     }
 
-
     public void actualizarDatosEmpleado(Empleado empleadoSelecionado, Empleado empleado) throws Exception {
 
         if (empleado != null && empleadoSelecionado != null){
@@ -297,6 +294,8 @@ public class FincaRaiz {
             empleadoSelecionado.setId(empleado.getId());
             empleadoSelecionado.setPassword(empleado.getPassword());
             empleadoSelecionado.setGenero(empleado.getGenero());
+            //empleados.remove(empleadoSelecionado);
+            //empleados.add(empleado);
         }
 
     }
@@ -325,25 +324,10 @@ public class FincaRaiz {
 
     }
 
+    public void retirarPropiedad(Propiedad propiedad){
+        propiedades.remove(propiedad);
+    }
 
-    public void menuEmpleado() {
-        System.out.println("1.Registrar propiedad.");
-        System.out.println("2.Registrar propietario.");
-        System.out.println("3.Registrar cliente.");
-        //System.out.println("4.Alquiler.");
-        //System.out.println("5.Venta.");
-        System.out.println("6.Retirar propiedad");
-    }
-    public void menuAdministrador() {
-        System.out.println("1.Visualizar reportes.");
-        System.out.println("2.Registrar empleado.");
-        System.out.println("3.Actulizar datos empleado.");
-        System.out.println("4.Bloquear cuenta.");
-    }
-    public void menuCliente() {
-        System.out.println("1.Comprar");
-        System.out.println("2.Alquilar");
-    }
 
     public List<String> getTipoPropiedaes(){
         return this.tipoPropiedaes;

@@ -4,14 +4,20 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.input.KeyEvent;
 import static com.example.iniciosesion.AppController.INSTANCE;
+
+import javafx.stage.Stage;
 import model.*;
 
 
+import java.io.IOException;
 import java.lang.ref.Cleaner;
 import java.net.URL;
 import java.util.List;
@@ -19,9 +25,8 @@ import java.util.ResourceBundle;
 
 
 public class EmpleadoController implements Initializable {
-    Propiedad propiedadSeleccionado;
     @FXML
-    private ObservableList<Propiedad> propiedades = FXCollections.observableArrayList(); //Lista para mostrar en la tabla
+    private ObservableList<Propiedad> propiedades = FXCollections.observableArrayList();
     @FXML
     private ObservableList<Propietario> propietarios = FXCollections.observableArrayList();
     @FXML
@@ -30,9 +35,6 @@ public class EmpleadoController implements Initializable {
     private TextField nombrePropietario;
     @FXML
     private TextField idPropietario;
-
-    FincaRaiz finca = INSTANCE.getModel();
-
     @FXML
     private TextField nombreCliente;
     @FXML
@@ -45,63 +47,46 @@ public class EmpleadoController implements Initializable {
     private TextField area;
     @FXML
     private ComboBox <Propietario> combopropietario;
-
     @FXML
     private TableView<Propiedad> tablaPropiedades;
-
     @FXML
     private TableColumn<Propiedad,  Double> columnaArea;
-
     @FXML
     private TableColumn<Propiedad, String> columnaDireccion;
-
     @FXML
     private TableColumn<Disponibilidad, Enum> columnaDisponibilidad;
-
     @FXML
     private TableColumn<Propiedad, Propietario> columnaPropietario;
-
     @FXML
     private TableColumn<Propiedad, Double> columnaValor;
     @FXML
     private TableColumn<Propiedad, String> colTipo;
-
-
     @FXML
     private TableView<Propietario> tablaPropietarios;
-
-
     @FXML
     private TableColumn<Propietario, String> columnaName;
-
     @FXML
     private TableColumn<Propietario, String> columnaIdPropietario;
-
     @FXML
     private TableView<Cliente> tablaClientes;
-
     @FXML
     private TableColumn<Cliente,  String> columnaNameCliente;
-
     @FXML
     private TableColumn<Cliente, String> columnaIdentificacionCliente;
-
     @FXML
     private ComboBox<String> cbTipoPropiedad;
-
     @FXML
     private ComboBox<Cliente> cbClientes;
-
     @FXML
-    private void comboboxEvents(ActionEvent e){}
+    private Button btnCerrarSesion;
+    FincaRaiz finca = INSTANCE.getModel();
+    Propiedad propiedadSeleccionada;
 
-    public void eventKey(KeyEvent keyEvent) {
-    }
-    public void eventAction(ActionEvent actionEvent) {
-    }
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
-
+        llenarTabla(INSTANCE.getModel().getPropiedades());
+        llenarTablaCliente(INSTANCE.getModel().getClientes());
+        llenarTablaPropietario(INSTANCE.getModel().getPropietarios());
         combopropietario.getItems().addAll(finca.getPropietarios());
         cbTipoPropiedad.getItems().addAll(finca.getTipoPropiedaes());
         cbClientes.getItems().addAll(finca.getClientes());
@@ -117,6 +102,9 @@ public class EmpleadoController implements Initializable {
 
         this.columnaNameCliente.setCellValueFactory(new PropertyValueFactory<>("nombre"));
         this.columnaIdentificacionCliente.setCellValueFactory(new PropertyValueFactory<>("id"));
+
+        tablaPropiedades.getSelectionModel().selectedItemProperty()
+                .addListener((observable, oldValue, newValue) -> llenarCampos(newValue));
     }
     public void registrarPropiedad() {
 
@@ -127,17 +115,18 @@ public class EmpleadoController implements Initializable {
         String tipoPropiedad = cbTipoPropiedad.getValue();
 
         try {
-            Propiedad propiedadRegistrada = finca.registrarPropiedad(tipoPropiedad, direccionRegistrada, Double.parseDouble(valorPropiedad), Double.parseDouble(areaPropiedad), propietarioP);
-            propiedades.add(propiedadRegistrada);
-            tablaPropiedades.setItems(propiedades);
-            tablaPropiedades.refresh(); //Actualiza la tabla
-            limpiarCamposPropiedad();
+            if(!direccionRegistrada.equals("") && !valorPropiedad.equals("") && !areaPropiedad.equals("") && !propietarioP.equals(null) && !tipoPropiedad.equals("")){
+                Propiedad propiedad = INSTANCE.getModel().registrarPropiedad(tipoPropiedad,direccionRegistrada,Double.parseDouble(valorPropiedad),Double.parseDouble(areaPropiedad), propietarioP);
+                llenarTabla(INSTANCE.getModel().getPropiedades());
+                limpiarCamposPropiedad();
+            }else{
+                mostrarMensajeAdvertencia("LLENE TODOS LOS CAMPOS");
+            }
         }
         catch (Exception e){
             e.getMessage();
         }
     }
-
     public void registrarPropietario () throws Exception {
 
         String nombre = nombrePropietario.getText();
@@ -153,8 +142,7 @@ public class EmpleadoController implements Initializable {
                 if (propietario != null){
                     propietarios.add(propietario);
                     combopropietario.setItems(propietarios);
-                    tablaPropietarios.setItems(propietarios);
-                    tablaPropietarios.refresh();
+                    llenarTablaPropietario(INSTANCE.getModel().getPropietarios());
                     limpiarCamposPropietario();
                     mostrarMensajeInformacion("SE HA AÑADIDO CORRECTAMENTE EL PROPIETARIO.");
                 }else{
@@ -167,7 +155,6 @@ public class EmpleadoController implements Initializable {
         }
 
     }
-
     public void registrarCliente () throws Exception {
 
         String nombre = nombreCliente.getText();
@@ -186,9 +173,8 @@ public class EmpleadoController implements Initializable {
                 if (cliente != null){
                     clientes.add(cliente);
                     cbClientes.setItems(clientes);
-                    tablaClientes.setItems(clientes);
-                    tablaClientes.refresh(); //Actualiza la tabla
-
+                    llenarTablaCliente(INSTANCE.getModel().getClientes());
+                    limpiarCamposCliente();
                     mostrarMensajeInformacion("SE AÑADIO CORRECTAMENTE EL CLIENTE");
                 }else{
                     mostrarMensajeAdvertencia("LLENE TODOS LOS CAMPOS.");
@@ -202,22 +188,72 @@ public class EmpleadoController implements Initializable {
         }
 
     }
+    public void onVenderClick(){
+        Cliente cliente = cbClientes.getValue();
+        if( propiedadSeleccionada != null){
+            if(cliente != null){
+                Propietario nuevoPropietario = new Propietario(cliente.getNombre(), cliente.getId());
+                propiedadSeleccionada.setDisponibilidad(Disponibilidad.NO_DISPONIBLE);
+                propiedadSeleccionada.setPropietario(nuevoPropietario);
+                tablaPropiedades.refresh();
+                limpiarCamposPropiedad();
+            }else{
+                mostrarMensajeAdvertencia("ELIGA UN CLIENTE PARA LA VENTA");
+            }
+        }else {
+            mostrarMensajeAdvertencia("ELIGA UNA PROPIEDAD PARA VENDER");
+        }
+    }
+    public void onAlquilarClick(){
+        Cliente cliente = cbClientes.getValue();
+        if( propiedadSeleccionada != null){
+            if(cliente != null){
+                propiedadSeleccionada.setDisponibilidad(Disponibilidad.NO_DISPONIBLE);
+                tablaPropiedades.refresh();
+                limpiarCamposPropiedad();
+            }else{
+                mostrarMensajeAdvertencia("ELIGA UN CLIENTE PARA ALQUILARLE LA PROPIEDAD");
+            }
+        }else {
+            mostrarMensajeAdvertencia("ELIGA UNA PROPIEDAD PARA ALQUILAR");
+        }
+    }
+    public void onBuscarClick() {
+        String tipoPropiedad = cbTipoPropiedad.getValue();
+        if (tipoPropiedad != null) {
+            llenarTabla(INSTANCE.getModel().buscarPropiedad(tipoPropiedad));
+            cbTipoPropiedad.setValue(null);
+        } else{
+            mostrarMensajeAdvertencia("INGRESE UN VALOR EN TIPO DE PROPIEDAD PARA FILTRAR");
+            llenarTabla(INSTANCE.getModel().getPropiedades());
+        }
 
-
-
-    /*private void llenarTabla(List<Propiedad> propiedadList) {
-        tablaPropiedades.setItems(FXCollections.observableArrayList(propiedadList));
-        tablaPropiedades.refresh();
-    }*/
-    private void limpiarCamposPropiedad() {
-        //nombre.setText("");
-        valor.setText("");
-        area.setText("");
-        cbTipoPropiedad.setValue(null);
-        combopropietario.setValue(null);
 
     }
-
+    public void onRetirarClick(){
+        if (propiedadSeleccionada != null){
+            INSTANCE.getModel().retirarPropiedad(propiedadSeleccionada);
+            List<Propiedad> listResult = (INSTANCE.getModel().getPropiedades());
+            if(listResult != null){
+                llenarTabla(listResult);
+            }else{
+                mostrarMensajeAdvertencia("NO SE HA ENCONTRADO NINGUNA PROPIEDAD");
+                llenarTabla(INSTANCE.getModel().getPropiedades());
+            }
+        }else{
+            mostrarMensajeAdvertencia("SELECCIONE UNA PROPIEDAD PARA ELIMINAR");
+        }
+    }
+    public void onCerrarSesionClick() throws IOException {
+        Parent parent = FXMLLoader.load(MainApp.class.getResource("login.fxml"));
+        Scene scene = new Scene(parent, 600, 600);
+        Stage stage = new Stage();
+        stage.setTitle("ADMINISTRADOR");
+        stage.setScene(scene);
+        stage.initOwner(btnCerrarSesion.getScene().getWindow());
+        btnCerrarSesion.getScene().getWindow().hide();
+        stage.show();
+    }
     private void mostrarMensajeAdvertencia(String mensaje) {
         Alert alert = new Alert(Alert.AlertType.WARNING);
         alert.setTitle("Advertencia");
@@ -230,13 +266,49 @@ public class EmpleadoController implements Initializable {
         alert.setContentText(mensaje);
         alert.showAndWait();
     }
-
-    public void limpiarCamposPropietario(){
+    private void limpiarCamposPropietario(){
         nombrePropietario.setText("");
         idPropietario.setText("");
     }
-    public void limpiarCamposCliente(){
+    private void limpiarCamposCliente(){
         nombreCliente.setText("");
         idCliente.setText("");
     }
+    private void limpiarCamposPropiedad() {
+        direccion.setText("");
+        valor.setText("");
+        area.setText("");
+        cbTipoPropiedad.setValue(null);
+        combopropietario.setValue(null);
+        cbClientes.setValue(null);
+
+    }
+    private void llenarCampos(Propiedad propiedad) {
+        propiedadSeleccionada = propiedad;
+        if (propiedad != null) {
+            direccion.setText(propiedad.getDireccion());
+            valor.setText(String.valueOf(propiedad.getValor()));
+            area.setText(String.valueOf(propiedad.getArea()));
+            combopropietario.setValue(propiedad.getPropietario());
+            cbTipoPropiedad.setValue(propiedad.getTipoPropiedad());
+        }
+    }
+    public void onCancelarClick() {
+        limpiarCamposPropiedad();
+        tablaPropiedades.getSelectionModel().clearSelection();
+
+    }
+    private void llenarTabla(List<Propiedad> propiedades) {
+        tablaPropiedades.setItems(FXCollections.observableArrayList(propiedades));
+        tablaPropiedades.refresh();
+    }
+    private void llenarTablaPropietario(List<Propietario> propietarios){
+        tablaPropietarios.setItems(FXCollections.observableArrayList(propietarios));
+        tablaPropietarios.refresh();
+    }
+    private void llenarTablaCliente(List<Cliente> clientes){
+        tablaClientes.setItems(FXCollections.observableArrayList(clientes));
+        tablaClientes.refresh();
+    }
+
 }

@@ -53,6 +53,8 @@ public class AdministradorController {
     private Label labelMensaje;
     @FXML
     private Button btnCerrarSesion;
+    @FXML
+    private TableColumn<Empleado, String> colPassword;
     Empleado empleadoSeleccionado;
 
     @FXML
@@ -64,6 +66,7 @@ public class AdministradorController {
         colCorreo.setCellValueFactory(new PropertyValueFactory<>("email"));
         colGenero.setCellValueFactory(new PropertyValueFactory<>("genero"));
         colEstado.setCellValueFactory(new PropertyValueFactory<>("estado"));
+        colPassword.setCellValueFactory(new PropertyValueFactory<>("password"));
 
         cbGenero.setItems(FXCollections.observableArrayList(Genero.values()));
 
@@ -141,6 +144,7 @@ public class AdministradorController {
             tfNombre.setText(empleado.getNombre());
             tfCorreo.setText(empleado.getEmail());
             cbGenero.setValue(empleado.getGenero());
+            tfContrasena.setText(empleado.getPassword());
 
         }
     }

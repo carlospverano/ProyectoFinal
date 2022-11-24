@@ -65,11 +65,12 @@
     </HBox>
     <TableView fx:id="tbEmpleados" prefHeight="200.0" prefWidth="200.0">
         <columns>
-            <TableColumn fx:id="colNumeroIdentificacion" prefWidth="139.0" text="Número Identificación" />
-            <TableColumn fx:id="colNombre" prefWidth="124.0" text="Nombre" />
-            <TableColumn fx:id="colGenero" prefWidth="116.0" text="Genero" />
-            <TableColumn fx:id="colCorreo" prefWidth="230.0" text="Correo" />
-         <TableColumn fx:id="colEstado" prefWidth="134.0" text="Estado" />
+            <TableColumn fx:id="colNumeroIdentificacion" prefWidth="160.0" text="Número Identificación" />
+            <TableColumn fx:id="colNombre" prefWidth="87.0" text="Nombre" />
+            <TableColumn fx:id="colGenero" prefWidth="90.0" text="Genero" />
+            <TableColumn fx:id="colCorreo" prefWidth="148.0" text="Correo" />
+         <TableColumn fx:id="colPassword" prefWidth="108.0" text="Contraseña" />
+         <TableColumn fx:id="colEstado" maxWidth="500.0" prefWidth="170.0" text="Estado" />
         </columns>
     </TableView>
 </VBox>
